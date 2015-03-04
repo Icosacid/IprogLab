@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" class="state1">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Dinner planner</title>
+	<link rel="stylesheet" href="css/iproglab2.css">
+</head>
+<body>
+	<div id="whole">
+		<div id="head">
+			<p class="homelette">Homelette</p>
+			<p class="subtitle">From the best chefs in the world directly into your kitchen</p>
+		</div>
+		<div id="left">
+			<div class="guestarea">
+				<p class="mydinner">My Dinner</p>
+				<p class="people">People :</p>
+				<p class="guests" id="guest"></p>
+				<button class="plus" id="plusGuest">+</button>
+				<button class="minus" id="minusGuest">-</button>
+			</div>
+			<div class="pricearea">
+				<div class="header">
+					<p class="dishname">Dish Name</p>
+					<p class="cost">Cost</p>
+				</div>
+				<div class="list">
+					<div class="element">
+						<p class="name">Pending</p>
+						<p class="price">0.00</p>
+					</div>
+				</div>
+				<div class="separator"></div>
+				<div class="perpersonpricearea">
+					<p class="desc">per person</p>
+					<p class="unity">SEK</p>
+					<p class="price">0</p>
+				</div>
+				<div class="totalpricearea">
+					<p class="desc">total</p>
+					<p class="unity">SEK</p>
+					<p class="totalprice">0</p>
+				</div>
+				<div class="confirm OK">
+					<p>Confirm Dinner</p>
+				</div>
+			</div>
+			
+		</div>
+		<div id="inner">
+			<div class="selectUI">
+				<div class="browser">
+					<p class="selectdish">SELECT DISH</p>
+					<div class="separator">
+					
+					</div>
+					<div class="search">
+						<form class="searchform" action="" method="">
+							<input class="searchfield" type='text' name='searchquery' placeholder='Enter key words' />
+							<input class="searchgo" type="submit" value="search">
+						</form>
+					</div>
+					<div class="type">
+						<select>
+							<option value="starter">Starter</option>
+							<option value="main dish">Main Dish</option>
+							<option value="dessert">Dessert</option>
+						</select>
+					</div>
+				</div>
+				<div class="display">
+				</div>
+			</div>
+			<div class="dishUI">
+				<div class="topleft">
+					<p class="name" id="dishName">Lasagne</p>
+					<img src="images/meatballs.jpg" alt="Lasagne"/>
+					<p class="text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
+					<div class="back">
+						<p>back to Select Dish</p>
+					</div>
+				</div>
+				<div class="ingredients">
+					<p class="title">Ingredients for <span class="peepz">1</span> people</p>
+					<div class="separator"></div>
+					<div class="inglist">
+						<div class="row">
+							<p class="quantity">750 g</p>
+							<p class="what">lean beef mince</p>
+							<p class="unit">SEK</p>
+							<p class="price">10.00</p>
+						</div>
+					</div>
+					<div class="separator2"></div>
+					<div class="bottom">
+						<div class="confirm">
+							<button id="confirmButton">Confirm Dish</button> <!--changed to a button-->
+						</div>
+						<p class="unit">SEK</p>
+						<p class="total">77.20</p>
+					</div>
+				</div>
+				<div class="prep">
+					<p class="preparation">Preparation</p>
+				</div>
+			</div>
+			<div class="confirmUI">
+				<div class="band">
+					<p class="mydinner">Number of Guests :<span class="ohmy" id="guestTotal"></span></p>
+					<div class="goback">
+						<p>Go back and edit dinner</p>
+					</div>
+				</div>
+				<div class="summary">
+					<div class="starter">
+						<img src="images/sourdough.jpg" alt=""/>
+						<p class="name" id="starterName"></p>
+						<p class="price"id="starterPrice"></p>
+						<p class="unit">SEK</p>
+					</div>
+					<div class="maindish">
+						<img src="images/icecream.jpg" alt=""/>
+						<p class="name" id="mainName"></p>
+						<p class="price" id="mainPrice"></p>
+						<p class="unit">SEK</p>
+					</div>
+					<div class="dessert">
+						<img src="images/bakedbrie.jpg" alt=""/>
+						<p class="name" id="dessertName"></p>
+						<p class="price" id="dessertPrice"></p>
+						<p class="unit">SEK</p>
+					</div>
+					<div class="verticalseparator"></div>
+					<div class="totalright">
+						<p class="total">Total:</p>
+						<p class="value" id="summaryPrice"></p>
+						<p class="unit">SEK</p>
+					</div>
+				</div>
+				<div class="separator"></div>
+				<div class="print">
+					<p>Print Full Recipe</p>
+				</div>
+			</div>
+			<div class="fullrecipeUI">
+				<div class="band">
+					<p class="mydinner">My Dinner: <span class="ohmy" id="guestTotal2"></span> people</p>
+					<div class="goback">
+						<p>Go back and edit dinner</p>
+					</div>
+				</div>
+				<div class="element">
+					
+						<div class="starter">
+							<img src="" alt=""/>
+							<p class="name" id="starterNameFRUI"></p>
+							<p class="description" id="starterDescFRUI"></p>
+						</div>
+					
+					<div class="right">
+						<p class="preparation">Preparation</p>
+						<p class="text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.<br/>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium.</p>
+					</div>
+				</div>
+				<div class="element">
+					
+						<div class="main">
+							<img src="" alt=""/>
+							<p class="name" id="mainNameFRUI"></p>
+							<p class="description" id="mainDescFRUI"></p>
+						</div>
+				
+					<div class="right">
+						<p class="preparation">Preparation</p>
+						<p class="text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.<br/>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium.</p>
+					</div>
+				</div>
+				<div class="element">
+				
+						<div class="dessert">
+							<img src="" alt=""/>
+							<p class="name" id="dessertNameFRUI"></p>
+							<p class="description" id="dessertDescFRUI"></p>
+				
+					</div>
+					<div class="right">
+						<p class="preparation">Preparation</p>
+						<p class="text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.<br/>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="hello">
+			<p class="title">A Home Dinner Service</p>
+			<div class="separator"></div>
+			<p class="introtext">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
+			<p class="start">start quickly</p>
+			<div class="create">
+				<p>Create new dinner</p>
+			</div>
+		</div>
+	</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery.js"></script>
+<!-- zoomCheat -->
+<script src="js/zoomCheat.js"></script>
+<!-- The application JavaScript code -->
+<script src="js/app.js"></script>
+<script src="js/model/dinnerModel.js"></script>
+<script src="js/view/view.js"></script>
+<script src="js/controller/controller.js"></script>
+</body>
+</html>

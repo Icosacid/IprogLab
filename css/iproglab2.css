@@ -1,0 +1,838 @@
+/**
+ *	Desktop CSS for Interac lab 2
+ *	1010x544 resolution
+ *	Alexandre Andrieux @ Feb. 2015
+ */
+
+/*** Skeleton ***/
+ 
+*,
+body,
+html{
+	margin:0;
+	padding:0;
+	white-space:nowrap;
+	position:absolute;
+	font-family: 'Yanone Kaffeesatz', sans-serif;
+	font-family: 'Playball', sans-serif;
+	font-family: 'Comic Sans MS', sans-serif;
+	overflow:hidden;
+	/* No selection */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	/* No unwanted drag */
+	-webkit-user-drag: none;
+	user-drag: none;
+	cursor:default;
+}
+html,
+body{
+	height:100%;
+	width:100%;
+    background:rgba(250,250,250,1);
+}
+#whole{
+	/* Trick that makes me never worry about zooming and screen resolution! */
+	/* See zoomCheat.js */
+    width:1010px;
+    height:544px;
+	box-shadow:rgba(0,0,0,0.8) 0px 0px 15px;
+	background:none;
+}
+.state1 #whole{
+	background:url('../images/kitchen.jpg');
+}
+
+/*** Actual content! ***/
+
+/** Welcome screen UI **/
+#hello{
+	width:50%;
+	height:50%;
+	top:35%;
+	background:rgba(255,255,255,0.6);
+	display:none;
+}
+.state1 #hello{
+	display:inherit;
+}
+#hello p.title{
+	font-size:20px;
+	top:4%;
+	left:4%;
+}
+#hello .separator{
+	width:100%;
+	left:0%;
+	height:2px;
+	top:17%;
+	background:rgba(0,0,0,0.5);
+	border-radius:50%;
+}
+#hello p.introtext{
+	top:22%;
+	white-space:pre-wrap;
+	font-size:12px;
+	left:5%;
+	width:90%;
+}
+#hello p.start{
+	font-size:12px;
+	top:67%;
+	left:5%;
+}
+#hello .create{
+	width:35%;
+	height:10%;
+	top:75%;
+	left:5%;
+	background:rgba(230,140,50,0.8);
+	border:rgba(0,0,0,0.8) 2px solid;
+	box-shadow:rgba(0,0,0,0.8) 2px 2px 0px;
+}
+#hello .create p{
+	width:100%;
+	text-align:center;
+	font-size:14px;
+	top:12%;
+	cursor:pointer;
+}
+
+/** Header **/
+#head{
+	height:15%;
+	width:100%;
+	background:rgba(0,0,0,0.1);
+	box-shadow:rgba(0,0,0,0.9) 0px 0px 15px;
+	border-bottom:black solid 3px;
+}
+.state1 #head{
+	background:rgba(180,150,50,0.6);
+}
+#head p.homelette{
+	width:30%;
+	height:100%;
+	font-size:30px;
+	top:20%;
+	left:3%;
+	text-transform:uppercase;
+	text-shadow:rgba(0,0,0,0.5) 0px 0px 1px;
+}
+#head p.subtitle{
+	width:70%;
+	left:25%;
+	height:100%;
+	top:40%;
+	font-style:italic;
+}
+
+/** Left menu **/
+#left{
+	height:85%;
+	top:15%;
+	width:20%;
+	background:rgba(255,255,255,0.05);
+	box-shadow:rgba(0,0,0,0.3) 5px 2px 5px;
+}
+.state1 #left,
+.state4 #left,
+.state5 #left{
+	display:none;
+}
+#left .guestarea{
+	width:100%;
+	height:20%;
+}
+#left .guestarea p.mydinner{
+	font-size:20px;
+	left:5%;
+	top:5%;
+	width:95%;
+	height:50%;
+}
+#left .guestarea p.people{
+	width:30%;
+	height:50%;
+	top:50%;
+	left:10%;
+}
+#left .guestarea p.guests{
+	width:10%;
+	top:50%;
+	left:40%;
+}
+#left .guestarea button.plus{
+	top:40%;
+	left:55%;
+	background:rgba(0,0,0,0.2);
+	border-radius:2px;
+	padding:0px 7px;
+	cursor:pointer;
+}
+#left .guestarea button.minus{
+	top:70%;
+	left:55%;
+	background:rgba(0,0,0,0.2);
+	border-radius:2px;
+	padding:0px 8px;
+	cursor:pointer
+}
+#left .pricearea{
+	width:100%;
+	height:80%;
+	top:20%;
+}
+#left .pricearea .header{
+	width:100%;
+	height:8%;
+	background:rgba(0,0,0,0.2);
+	position:relative;
+}
+#left .pricearea .header p.dishname{
+	top:10%;
+	width:50%;
+	height:100%;
+	left:5%;
+}
+#left .pricearea .header p.cost{
+	top:10%;
+	width:20%;
+	height:100%;
+	right:0%;
+}
+#left .pricearea .list{
+	position:relative;
+	width:100%;
+}
+#left .pricearea .element{
+	width:100%;
+	height:30px;
+	position:relative;
+	margin-top:5px;
+}
+#left .pricearea .list .element p.name{
+	height:100%;
+	width:65%;
+	left:5%;
+	color:rgba(150,0,0,0.8);
+}
+#left .pricearea .list .element p.price{
+	height:100%;
+	width:20%;
+	right:5%;
+	text-align:right;
+	color:rgba(150,0,0,0.8);
+}
+#left .pricearea .separator{
+	width:80%;
+	height:2px;
+	left:10%;
+	background:darkgrey;
+	position:relative;
+}
+#left .pricearea .perpersonpricearea{
+	width:100%;
+	position:relative;
+	height:30px;
+	margin-top:5px;
+}
+#left .pricearea .perpersonpricearea p.unity{
+	height:100%;
+	color:rgba(150,0,0,0.8);
+	width:15%;
+	left:55%;
+}
+#left .pricearea .perpersonpricearea p.price{
+	height:100%;
+	color:rgba(150,0,0,0.8);
+	width:20%;
+	right:5%;
+	text-align:right;
+}
+#left .pricearea .perpersonpricearea p.desc{
+	height:100%;
+	color:rgba(150,0,0,0.8);
+	width:50%;
+	left:5%;
+	text-align:left;
+}
+
+#left .pricearea .totalpricearea{
+	width:100%;
+	position:relative;
+	height:30px;
+	margin-top:5px;
+}
+#left .pricearea .totalpricearea p.unity{
+	height:100%;
+	color:rgba(150,0,0,0.8);
+	width:15%;
+	left:55%;
+}
+#left .pricearea .totalpricearea p.totalprice{
+	height:100%;
+	color:rgba(150,0,0,0.8);
+	width:20%;
+	right:5%;
+	text-align:right;
+	
+}
+#left .pricearea .totalpricearea p.desc{
+	height:100%;
+	color:rgba(150,0,0,0.8);
+	width:20%;
+	left:5%;
+	text-align:left;
+}
+#left .pricearea .confirm{
+	background:rgba(250,200,100,0.6);
+	border:solid darkgrey 2px;
+	box-shadow:rgba(0,0,0,0.5) 2px 2px 0px;
+	width:80%;
+	left:10%;
+	height:30px;
+	position:relative;
+}
+#left .pricearea .confirm p{
+	width:100%;
+	height:100%;
+	text-align:center;
+	top:10%;
+	color:rgba(0,0,0,0.3);
+}
+#left .pricearea .confirm.OK{
+	background:rgba(250,140,50,0.8);
+	border:rgba(0,0,0,0.8) solid 2px;
+}
+#left .pricearea .confirm.OK p{
+	cursor:pointer;
+	color:black;
+}
+.state1 #inner{
+	display:none;
+}
+
+/** Inner container **/
+#inner{
+	width:80%;
+	left:20%;
+	height:85%;
+	top:15%;
+	overflow-y:scroll;
+}
+.state4 #inner,
+.state5 #inner{
+	width:100%;
+	left:0%;
+}
+
+/** Select UI **/
+.selectUI{
+	width:100%;
+	height:100%;
+	display:none;
+}
+.state2 .selectUI{
+	display:inherit;
+}
+.selectUI .browser{
+	width:100%;
+	background:rgba(210,180,0,0.4);
+	height:25%;
+}
+.selectUI .browser p.selectdish{
+	top:10%;
+	left:10%;
+}
+.selectUI .browser .separator{
+	background:rgba(0,0,0,0.6);
+	width:80%;
+	left:10%;
+	top:35%;
+	height:2px;
+}
+.selectUI .browser .search{
+	width:40%;
+	height:60%;
+	top:40%;
+	left:5%;
+}
+.selectUI .browser .search form.searchform{
+	width:100%;
+	height:100%;
+}
+.selectUI .browser .search input.searchfield{
+	left:10%;
+	top:32%;
+}
+.selectUI .browser .search input.searchgo{
+	left:55%;
+	top:30%;
+	width:30%;
+	cursor:pointer;
+}
+.selectUI .browser .type{
+	width:40%;
+	height:60%;
+	top:40%;
+	left:45%;
+}
+.selectUI .browser .type select{
+	left:5%;
+	top:32%;
+	width:50%;
+}
+.selectUI .display{
+	width:100%;
+	height:100%;
+	top:25%;
+}
+.selectUI .display .block{
+	width:15%;
+	left:20px;
+	margin:15px;
+	height:250px;
+	position:relative;
+	display:inline-block;
+	float:left;
+}
+.selectUI .display .block:hover{
+	background:rgba(0,0,0,0.1);	
+}
+.selectUI .display .block *{
+	cursor:pointer;
+}
+.selectUI .display .block img{
+	width:96%;
+	height:45%;
+	border:rgba(0,0,0,0.8) solid 3px;
+	border-radius:2px;
+}
+.selectUI .display .block p.name{
+	width:96%;
+	height:8%;
+	top:36.5%;
+	text-align:center;
+	background:rgba(200,200,200,0.7);
+	color:rgba(0,0,0,0.8);
+	border:rgba(0,0,0,0.8) solid 3px;
+	font-size:13px;
+	padding-top:2px;
+}
+.selectUI .display .block p.description{
+	top:52%;
+	height:52%;
+	font-size:9px;
+	white-space:pre-wrap;
+	text-align:center;
+}
+/** Dish UI **/
+.dishUI{
+	width:100%;
+	height:100%;
+	display:none;
+}
+.state3 .dishUI{
+	display:inherit;
+}
+.dishUI .topleft{
+	width:50%;
+	height:400px;
+}
+.dishUI .topleft p.name{
+	font-size:25px;
+	width:50%;
+	left:10%;
+	top:2%;
+	height:10%;
+	text-transform: uppercase;
+}
+.dishUI .topleft img{
+	width:80%;
+	left:10%;
+	height:40%;
+	top:11%;
+}
+.dishUI .topleft p.text{
+	top:53%;
+	height:30%;
+	left:10%;
+	width:80%;
+	font-size:10px;
+	white-space: pre-wrap;
+}
+.dishUI .topleft .back{
+	background:rgba(250,140,50,0.8);
+	border-radius:5px;
+	width:40%;
+	left:10%;
+	top:85%;
+	height:26px;
+	border:rgba(0,0,0,0.8) solid 2px;
+}
+.dishUI .topleft .back p{
+	width:100%;
+	height:100%;
+	text-align:center;
+	font-size:13px;
+	top:3px;
+	cursor:pointer;
+}
+.dishUI .ingredients{
+	width:50%;
+	left:49%;
+	box-shadow:rgba(0,0,0,0.5) 0px 0px 10px;
+	height:400px;
+	background:rgba(220,185,50,0.8);
+	border:rgba(0,0,0,0.8) solid 3px;
+	border-radius:2px;
+}
+.dishUI .ingredients p.title{
+	width:100%;
+	text-align:left;
+	width:90%;
+	left:5%;
+	top:3%;
+	height:10%;
+	font-weight:bold;
+	font-size:13px;
+	position:relative;
+	text-transform:uppercase;
+}
+.dishUI .ingredients p.title span{
+	position:relative;
+}
+.dishUI .ingredients .separator{
+ 	width:90%;
+	left:5%;
+	height:2px;
+	background:rgba(0,0,0,0.8);
+	position:relative;
+}
+.dishUI .ingredients .inglist{
+	position:relative;
+	height:70%;
+	width:90%;
+	left:5%;
+}
+.dishUI .ingredients .inglist .row{
+	position:relative;
+	top:3%;
+	height:10%;
+	width:100%;
+}
+.dishUI .ingredients .inglist .row p.quantity{
+	width:20%;
+	height:100%;
+}
+.dishUI .ingredients .inglist .row p.what{
+	width:50%;
+	left:20%;
+	height:100%;
+}
+.dishUI .ingredients .inglist .row p.unit{
+	width:10%;
+	left:70%;
+	height:100%;
+}
+.dishUI .ingredients .inglist .row p.price{
+	width:20%;
+	left:80%;
+	text-align:right;
+	height:100%;
+}
+.dishUI .ingredients .separator2{
+	width:90%;
+	left:5%;
+	height:2px;
+	background:rgba(0,0,0,0.8);
+	position:relative;
+}
+.dishUI .ingredients .bottom{
+	width:100%;
+	height:20%;
+}
+.dishUI .ingredients .bottom .confirm{
+	width:30%;
+	height:30px;
+	left:5%;
+	top:25%;
+	background:rgba(250,140,50,0.8);
+	border:rgba(0,0,0,0.8) solid 2px;
+	box-shadow:rgba(0,0,0,0.8) 3px 3px 0px;
+}
+.dishUI .ingredients .bottom .confirm button{
+	font-size:13px;
+	width:100%;
+	height:100%;
+	text-align:center;
+	top:15%;
+}
+.dishUI .ingredients .bottom p.unit{
+	width:10%;
+	left:70%;
+	top:25%;
+	height:100%;
+}
+.dishUI .ingredients .bottom p.total{
+	width:15%;
+	top:25%;
+	right:1%;
+	height:100%;
+}
+.dishUI .prep{
+
+}
+.dishUI .prep p.preparation{
+
+}
+/** Confirm UI **/
+.confirmUI{
+	width:100%;
+	height:100%;
+	display:none;
+}
+.state4 .confirmUI{
+	display:inherit;
+}
+.confirmUI .band,
+.fullrecipeUI .band{
+	width:100%;
+	height:15%;
+	background:rgba(210,180,0,0.4);
+	box-shadow:rgba(0,0,0,0.8) 0px 0px 10px;
+}
+.confirmUI .band p.mydinner,
+.fullrecipeUI .band p.mydinner{
+	font-size:20px;
+	left:5%;
+	top:28%;
+}
+.confirmUI .band p.mydinner span,
+.fullrecipeUI .band p.mydinner span{
+	position:relative;
+}
+.confirmUI .band .goback,
+.fullrecipeUI .band .goback{
+	width:30%;
+	height:30px;
+	left:65%;
+	top:25%;
+	background:rgba(250,140,50,0.8);
+	border:rgba(0,0,0,0.8) solid 2px;
+	border-radius:5px;
+}
+.confirmUI .band .goback p,
+.fullrecipeUI .band .goback p{
+	font-size:13px;
+	width:100%;
+	height:100%;
+	text-align:center;
+	top:15%;
+	cursor:pointer;
+}
+.confirmUI .summary{
+	width:100%;
+	height:85%;
+	top:20%;
+}
+.confirmUI .summary .starter,
+.confirmUI .summary .maindish,
+.confirmUI .summary .dessert{
+	width:12%;
+	left:20px;
+	margin:20px;
+	height:250px;
+	position:relative;
+	display:inline-block;
+	float:left;
+	left:25%;
+}
+.confirmUI .summary .starter img,
+.confirmUI .summary .maindish img,
+.confirmUI .summary .dessert img{
+	width:96%;
+	height:45%;
+	border:rgba(0,0,0,0.8) solid 3px;
+	border-radius:2px;
+}
+.confirmUI .summary .starter p.name,
+.confirmUI .summary .maindish p.name,
+.confirmUI .summary .dessert p.name{
+	width:96%;
+	height:10%;
+	top:35%;
+	text-align:center;
+	background:rgba(200,200,200,0.7);
+	color:rgba(0,0,0,0.8);
+	border:rgba(0,0,0,0.8) solid 3px;
+}
+.confirmUI .summary .starter p.description,
+.confirmUI .summary .maindish p.description,
+.confirmUI .summary .dessert p.description{
+	top:52%;
+	height:52%;
+	font-size:9px;
+	white-space:pre-wrap;
+	text-align:center;
+}
+.confirmUI .summary .starter p.price,
+.confirmUI .summary .maindish p.price,
+.confirmUI .summary .dessert p.price{
+	top:52%;
+	height:52%;
+	color:rgba(150,0,0,0.8);
+	right:25%;
+	font-size:13px;
+}
+.confirmUI .summary .starter p.unit,
+.confirmUI .summary .maindish p.unit,
+.confirmUI .summary .dessert p.unit{
+	top:52%;
+	height:52%;
+	color:rgba(150,0,0,0.8);
+	right:0%;
+	font-size:13px;
+	text-align:right;
+}
+.confirmUI .summary .starter{
+
+}
+.confirmUI .summary .maindish{
+
+}
+.confirmUI .summary .dessert{
+
+}
+.confirmUI .summary .verticalseparator{
+	width:2px;
+	height:170px;
+	background:rgba(0,0,0,0.3);
+	border-radius:50%;
+	position:relative;
+	display:inline-block;
+	left:25%;
+	vertical-align:top;
+}
+.confirmUI .summary .totalright{
+
+	height:170px;
+	position:relative;
+	display:inline-block;
+	left:25%;
+	width:12%;
+	left:20px;
+	margin:20px;
+	height:250px;
+	left:25%;
+}
+.confirmUI .summary .totalright p.total{
+	font-size:13px;
+	top:42%;
+}
+.confirmUI .summary .totalright p.value{
+	font-size:15px;
+	top:52%;
+		color:rgba(150,0,0,0.8);
+}
+.confirmUI .summary .totalright p.unit{
+	left:45%;
+	top:52%;
+	font-size:14px;
+		color:rgba(150,0,0,0.8);
+}
+.confirmUI .separator{
+	width:100%;
+	height:2px;
+	background:rgba(0,0,0,0.7);
+	border-radius:50%;
+	top:62%;
+}
+.confirmUI .print{
+	width:30%;
+	height:30px;
+	left:35%;
+	top:70%;
+	background:rgba(250,140,50,0.8);
+	border:rgba(0,0,0,0.8) solid 2px;
+	box-shadow:rgba(0,0,0,0.8) 3px 3px 0px;
+}
+.confirmUI .print p{
+	font-size:13px;
+	width:100%;
+	height:100%;
+	text-align:center;
+	top:15%;
+	cursor:pointer;
+}
+
+/** Full Recipe UI **/
+.fullrecipeUI{
+	width:100%;
+	height:100%;
+	overflow: auto;
+	display:none;
+}
+.state5 .fullrecipeUI{
+	display:inherit;
+}
+.fullrecipeUI .element{
+	position:relative;
+	top:15%;
+	width:100%;
+	height:160px;
+}
+.fullrecipeUI .element .starter ,
+.fullrecipeUI .element .main,
+.fullrecipeUI .element .dessert{
+	width:50%;
+	height:100%;
+}
+.fullrecipeUI .element .starter img,
+.fullrecipeUI .element .main img,
+.fullrecipeUI .element .dessert img{
+	width:120px;
+	height:120px;
+	left:5%;
+	top:15%;
+	border:rgba(0,0,0,0.8) solid 3px;
+	border-radius:2px;
+}
+.fullrecipeUI .element > div p.name{
+	left:35%;
+	top:17%;
+	text-transform:uppercase;
+	font-weight:bold;
+}
+.fullrecipeUI .element > div p.description{
+	left:35%;
+	top:35%;
+	width:55%;
+	font-size:10px;
+	white-space: pre-wrap;
+}
+.fullrecipeUI .element .right{
+	left:50%;
+	width:50%;
+	height:100%;
+}
+.fullrecipeUI .element .right p.preparation{
+	left:5%;
+	top:15%;
+	text-transform: uppercase;
+	font-size:13px;
+}
+.fullrecipeUI .element .right p.text{
+	left:5%;
+	width:90%;
+	top:30%;
+	font-size:10px;
+	white-space: pre-wrap;
+}
+
+
+
