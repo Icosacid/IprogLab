@@ -10,17 +10,33 @@ var DinnerModel = function() {
 		dessertID : 0,
 	};
 
+	this.totalPerPerson = null;
+	this.total = null;
+	
 	this.setNumberOfGuests = function(num) {
 		if (num > 0 && num <= 42){
 			this.guests = num;
 		}
 		else {console.log("Guest number out of range");}
 	}
-
-	// should return 
+	this.setTotalPerPerson = function(num) {
+		this.totalPerPerson = num;
+	}
+	this.setTotal = function(num) {
+		this.total = num;
+	}
+	
+	// Returns number of guests
 	this.getNumberOfGuests = function() {
-		//console.log("hej"); //testing if the function is cqlled
 		return this.guests;
+	}
+	// Returns total per person
+	this.getTotalPerPerson = function() {
+		return this.totalPerPerson;
+	}
+	// Returns total
+	this.getTotal = function() {
+		return this.total;
 	}
 
 	//Returns the dish that is on the menu for selected type 
@@ -168,6 +184,7 @@ var DinnerModel = function() {
 		return (this.selected.starterID == id || this.selected.mainDishID == id || this.selected.dessertID == id);
 	}
 
+	// 
 	// function that returns the size of the dishes array
 	this.countDishes = function(){
 		return dishes.length;

@@ -1,13 +1,17 @@
 // View Object constructor
-var View = function (container) {
-	this.displayed = 0;
-	/** Left menu UI **/
+var View = function (container,model){
+
+	model.addObserver(this);
 	
-	// Guest number
+	this.displayed = 0;
+	
+	/** In several UI **/
 	this.setGuests = function(num){
-		jQuery('#left p.guests').html(num);//don't understand if it works and when
-		//$("#guest").append(model.getNumberOfGuests());
+		jQuery('#left p.guests').html(num);
+		jQuery('#guestTotal').html(num);
 	}
+	
+	/** Left menu UI **/
 	this.addToList = function(name,price){
 		var HTML = "<div class='element'><p class='name'>"+name+"</p><p class='price'>"+price+"</p></div>";
 		jQuery('#left .list').append(HTML);
@@ -21,25 +25,16 @@ var View = function (container) {
 	}
 	this.setLeftTotal = function(total){
 		jQuery('#left .pricearea .totalpricearea p.totalprice').html(total);
-
-	}
-
-	this.setSummaryTotal = function(total){
-		jQuery('.confirmUI .summary .totalright p.value').html(total);
-	}
-	this.setIngredientsTotal = function(total){
-		jQuery('.dishUI .ingredients .bottom p.total').html(total);
 	}
 
 	/** SelectDish UI **/
-	var display = jQuery('.selectUI .display');
 	this.clearBlocks = function(){
 		display.html('');
 	}
 	this.addBlock = function(id,imgsrc,name,description){
 		var blockHTML = "<div class='block id"+id+"'><img src='"+imgsrc+"' alt='"+name+"'/><p class='name'>"+name+"</p><p class='description'>"+description+"</p></div>";
 		console.log("appended: ",blockHTML);
-		display.append(blockHTML);
+		jQuery('.selectUI .display').append(blockHTML);
 	}
 	
 	/** Dish UI **/
@@ -65,10 +60,36 @@ var View = function (container) {
 		}
 		jQuery('.dishUI .ingredients .bottom p.total').html(totalPersonPrice*guests);
 	}
-		
+	this.setIngredientsTotal = function(total){
+		jQuery('.dishUI .ingredients .bottom p.total').html(total);
+	}
+	
+	/** Confirm UI **/
+	this.setSummaryTotal = function(total){
+		jQuery('.confirmUI .summary .totalright p.value').html(total);
+	}
+	
 	/** States management **/
 	this.state = function(num){
 		jQuery('html').removeClass().addClass('state'+num);
+	}
+	
+	/** Update method for Observer pattern **/
+	/*
+	 * Unique update function that updates all DOM elements
+	 * @param  {Object} object !!!OPTIONAL!!! object with parameters for the update
+	 */
+	this.update = function(object){
+	
+		/** In several UI **/
+		this.setGuests(model.getNumberOfGuests());
+		
+		/** Left menu UI **/
+		this.setLeftTotalPerPerson(model.getTotalPerPerson());
+		this.setLeftTotal(model.getTotal());
+		
+		/** Confirm UI **/
+		this.setSummaryTotal(model.getTotal());
 	}
 }
  

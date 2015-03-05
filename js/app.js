@@ -6,7 +6,7 @@ jQuery(document).ready(function(){
 	//console.log(model.getNumberOfGuests());
 	// Create the needed controllers and views
 	//console.log(model.getTotalMenuPrice());
-	var view = new View(jQuery("#whole"));
+	var view1 = new View(jQuery("#whole"),model);
 	var controller = new Controller(view,model);
 
 	//this.g = view.find("#guest");

@@ -6,13 +6,9 @@ var Controller = function (view,model) {
 	this.searchStatus = 'starter';
 	var self = this;
 	
-	/** Initial HTML fill (temporary) **/ 
-	// #left
 	/** Initial search type **/
 	displayDishes('starter',false);
-	//view.addToList("Lasagne",77.5);
-	//view.setLeftTotal(77.50);
-	
+
 	/** Listeners for dishes **/
 	// Dish listeners on selectUI to display DishUI
 	// Tiggered in displayDishes()
@@ -53,8 +49,7 @@ var Controller = function (view,model) {
 		state = 4;
 		view.state(4);
 		console.log("confirmUI");
-		$("#guestTotal").empty();
-		$("#guestTotal").append(model.getNumberOfGuests()); // print nbr of ppl
+
 		//Set the right starter, main dish and dessert
 		$("#starterName").empty();
 		$("#starterName").append(model.getDish(model.selected.starterID).name);
@@ -168,9 +163,9 @@ var Controller = function (view,model) {
 			view.addToList(model.getDish(model.selected.dessertID).name,model.getDishPrice(model.selected.dessertID));
 			menuDishPrice += model.getDishPrice(model.selected.dessertID);
 		}
-		view.setLeftTotalPerPerson(menuDishPrice);
-		view.setLeftTotal(menuDishPrice * model.guests);
-		view.setSummaryTotal(menuDishPrice * model.guests);
+		
+		model.setTotalPerPerson(menuDishPrice);
+		model.setTotal(menuDishPrice * model.guests);
 	}
 
 	document.getElementById("confirmButton").addEventListener("click", function(){
