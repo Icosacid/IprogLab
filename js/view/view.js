@@ -6,9 +6,10 @@ var View = function (container,model){
 	this.displayed = 0;
 	
 	/** In several UI **/
-	this.setGuests = function(num){
-		jQuery('#left p.guests').html(num);
-		jQuery('#guestTotal').html(num);
+	this.setGuests = function(){
+		jQuery('#left p.guests').html(model.getNumberOfGuests());
+		jQuery('#guestTotal').html(model.getNumberOfGuests());
+		jQuery('#guestTotal2').html(model.getNumberOfGuests());
 	}
 	
 	/** Left menu UI **/
@@ -16,34 +17,32 @@ var View = function (container,model){
 		var HTML = "<div class='element'><p class='name'>"+name+"</p><p class='price'>"+price+"</p></div>";
 		jQuery('#left .list').append(HTML);
 	}
+	this.addPendingLineToList = function(){
+		var pendingHTML = "<div class='element'><p class='name'>"+"Pending"+"</p><p class='price'>"+"..."+"</p></div>";
+		jQuery('#left .list').append(pendingHTML);
+	}
 	this.emptyList= function(){
 		jQuery('#left .list').html('');
 	}
 	this.shapeList = function(){
-		var menuDishPrice = 0;
-		if (model.selected.starterID !== 0)
-		{
+		if (model.selected.starterID !== 0){
 			this.addToList(model.getDish(model.selected.starterID).name,model.getDishPrice(model.selected.starterID));
-			menuDishPrice += model.getDishPrice(model.selected.starterID);
-		}	
-		if (model.selected.mainDishID !== 0)
-		{
+		}
+		if (model.selected.mainDishID !== 0){
 			this.addToList(model.getDish(model.selected.mainDishID).name,model.getDishPrice(model.selected.mainDishID));
-			menuDishPrice += model.getDishPrice(model.selected.mainDishID);
 		}
-		if (model.selected.dessertID !== 0)
-		{
+		if (model.selected.dessertID !== 0){
 			this.addToList(model.getDish(model.selected.dessertID).name,model.getDishPrice(model.selected.dessertID));
-			menuDishPrice += model.getDishPrice(model.selected.dessertID);
 		}
-		
+		if (parseInt(model.selected.starterID + model.selected.mainDishID + model.selected.dessertID) == 0){
+			this.addPendingLineToList();
+		}
 	}
-	this.setLeftTotalPerPerson = function(total){
-		jQuery('#left .pricearea .perpersonpricearea p.price').html(total);
-
+	this.setLeftTotalPerPerson = function(){
+		jQuery('#left .pricearea .perpersonpricearea p.price').html(model.getTotalPerPerson());
 	}
-	this.setLeftTotal = function(total){
-		jQuery('#left .pricearea .totalpricearea p.totalprice').html(total);
+	this.setLeftTotal = function(){
+		jQuery('#left .pricearea .totalpricearea p.totalprice').html(model.getTotal());
 	}
 
 	/** SelectDish UI **/
@@ -84,8 +83,30 @@ var View = function (container,model){
 	}
 	
 	/** Confirm UI **/
-	this.setSummaryTotal = function(total){
-		jQuery('.confirmUI .summary .totalright p.value').html(total);
+	this.setSummaryTotal = function(){
+		jQuery('.confirmUI .summary .totalright p.value').html(model.getTotal());
+	}
+	
+	/** Full Recipe UI **/
+	this.shapeFinalRecipe = function(){
+		// Starter
+		if (model.selected.starterID !== 0){
+			$("#starterNameFRUI").html(model.getDish(model.selected.starterID).name);
+			$("#starterDescFRUI").html(model.getDish(model.selected.starterID).description);
+			$(".fullrecipeUI .element .starter img").attr('src',model.getDish(model.selected.starterID).image); 
+		}
+		if (model.selected.mainDishID !== 0){
+			// Main Dish
+			$("#mainNameFRUI").html(model.getDish(model.selected.mainDishID).name);
+			$("#mainDescFRUI").html(model.getDish(model.selected.mainDishID).description);
+			$(".fullrecipeUI .element .main img").attr('src',model.getDish(model.selected.mainDishID).image);
+		}
+		if (model.selected.dessertID !== 0){
+			// Dessert
+			$("#dessertNameFRUI").html(model.getDish(model.selected.dessertID).name);
+			$("#dessertDescFRUI").html(model.getDish(model.selected.dessertID).description);
+			$(".fullrecipeUI .element .dessert img").attr('src',model.getDish(model.selected.dessertID).image);
+		}
 	}
 	
 	/** States management **/
@@ -98,20 +119,22 @@ var View = function (container,model){
 	 * Unique update function that updates all DOM elements
 	 * @param  {Object} object !!!OPTIONAL!!! object with parameters for the update
 	 */
-
 	this.update = function(object){
 	
 		/** In several UI **/
-		this.setGuests(model.getNumberOfGuests());
+		this.setGuests();
 		
 		/** Left menu UI **/
-		//emptylist and refill list todo
-
-		this.setLeftTotalPerPerson(model.getTotalPerPerson());
-		this.setLeftTotal(model.getTotal());
+		this.emptyList();
+		this.shapeList();
+		this.setLeftTotalPerPerson();
+		this.setLeftTotal();
 		
 		/** Confirm UI **/
-		this.setSummaryTotal(model.getTotal());
+		this.setSummaryTotal();
+		
+		/** Full Recipe UI **/
+		this.shapeFinalRecipe();
 	}
 }
  

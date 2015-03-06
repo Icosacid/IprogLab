@@ -1,5 +1,5 @@
 // Controller Object constructor
-var Controller = function (view,model) {
+var Controller = function (view,model){
 
 	/** Controller variables **/
 	var state = 1;
@@ -9,6 +9,65 @@ var Controller = function (view,model) {
 	/** Initial search type **/
 	displayDishes('starter',false);
 
+	/** Listeners to panels (forever in the DOM, <3) **/
+	// #hello listener
+	jQuery('#hello .create p').off().on('click',function(){
+		// Update state
+		state = 2;
+		// CSS state
+		view.state(2);
+	});
+	
+	// Back from DishUI to selectUI
+	jQuery('.dishUI .back p').off().on('click',function(){
+		state = 2;
+		view.state(2);
+		console.log("dishUIback");
+	});
+	
+	// Back from DishUI to selectUI but with dish selection
+	jQuery("#confirmButton").off().on("click", function(){
+		state = 2;
+		view.state(2);
+		model.addDishToMenu(view.displayed);
+	});
+	
+	// Go to confirmUI
+	jQuery('#left .confirm p').off().on('click',function(){
+		state = 4;
+		view.state(4);
+		console.log("confirmUI");
+
+		//Set the right starter, main dish and dessert
+		$("#starterName").html(model.getDish(model.selected.starterID).name);
+		$("#starterPrice").html(model.getDishPrice(model.selected.starterID));
+		//$(".confirmUI .summary .starter img").empty();
+		$(".confirmUI .summary .starter img").attr('src',model.getDish(model.selected.starterID).image); 
+
+		$("#mainName").html(model.getDish(model.selected.mainDishID).name);
+		$("#mainPrice").html(model.getDishPrice(model.selected.mainDishID));
+		$(".confirmUI .summary .maindish img").attr('src',model.getDish(model.selected.mainDishID).image); 
+		$("#dessertName").html(model.getDish(model.selected.dessertID).name);
+		$("#dessertPrice").html(model.getDishPrice(model.selected.dessertID));
+		$(".confirmUI .summary .dessert img").attr('src',model.getDish(model.selected.dessertID).image); 
+
+
+	});
+	
+	// Back from confirmUI and fullrecipeUI to selectUI
+	jQuery('.confirmUI .goback p, .fullrecipeUI .goback p').off().on('click',function(){
+		state = 2;
+		view.state(2);
+		console.log("confirmUI and fullrecipeUI to selectUI");
+	});
+	
+	// Go to fullrecipeUI
+	jQuery('.confirmUI .print p').off().on('click',function(){
+		state = 5;
+		view.state(5);
+		console.log("fullrecipeUI");
+	});
+	
 	/** Listeners for dishes **/
 	// Dish listeners on selectUI to display DishUI
 	// Tiggered in displayDishes()
@@ -27,83 +86,6 @@ var Controller = function (view,model) {
 			})(key);
 		}
 	};
-	
-	/** Listeners to panels (forever in the DOM, <3) **/
-	// #hello listener
-	jQuery('#hello .create p').off().on('click',function(){
-		// Update state
-		state = 2;
-		// CSS state
-		view.state(2);
-	});
-	
-	// Back from DishUI to selectUI
-	jQuery('.dishUI .back p').off().on('click',function(){
-		state = 2;
-		view.state(2);
-		console.log("dishUIback");
-	});
-	
-	// Go to confirmUI
-	jQuery('#left .confirm p').off().on('click',function(){
-		state = 4;
-		view.state(4);
-		console.log("confirmUI");
-
-		//Set the right starter, main dish and dessert
-		$("#starterName").empty();
-		$("#starterName").append(model.getDish(model.selected.starterID).name);
-		$("#starterPrice").empty();
-		$("#starterPrice").append(model.getDishPrice(model.selected.starterID));
-		//$(".confirmUI .summary .starter img").empty();
-		$(".confirmUI .summary .starter img").attr('src',model.getDish(model.selected.starterID).image); 
-
-		$("#mainName").empty();
-		$("#mainName").append(model.getDish(model.selected.mainDishID).name);
-		$("#mainPrice").empty();
-		$("#mainPrice").append(model.getDishPrice(model.selected.mainDishID));
-		$(".confirmUI .summary .maindish img").attr('src',model.getDish(model.selected.mainDishID).image); 
-		$("#dessertName").empty();
-		$("#dessertName").append(model.getDish(model.selected.dessertID).name);
-		$("#dessertPrice").empty();
-		$("#dessertPrice").append(model.getDishPrice(model.selected.dessertID));
-		$(".confirmUI .summary .dessert img").attr('src',model.getDish(model.selected.dessertID).image); 
-
-
-	});
-	
-	// Back from confirmUI and fullrecipeUI to selectUI
-	jQuery('.confirmUI .goback p, .fullrecipeUI .goback p').off().on('click',function(){
-		state = 2;
-		view.state(2);
-		console.log("confirmUI and fullrecipeUI to selectUI");
-	});
-	// Go to fullrecipeUI
-	jQuery('.confirmUI .print p').off().on('click',function(){
-		state = 5;
-		view.state(5);
-		console.log("fullrecipeUI");
-		$("#guestTotal2").empty();
-		$("#guestTotal2").append(model.getNumberOfGuests()); // print nbr of ppl
-				//Set the right starter, main dish and dessert
-		$("#starterNameFRUI").empty();
-		$("#starterNameFRUI").append(model.getDish(model.selected.starterID).name);
-		$("#starterDescFRUI").empty();
-		$("#starterDescFRUI").append(model.getDish(model.selected.starterID).description);
-		$(".fullrecipeUI .element .starter img").attr('src',model.getDish(model.selected.starterID).image);  
-
-		$("#mainNameFRUI").empty();
-		$("#mainNameFRUI").append(model.getDish(model.selected.mainDishID).name);
-		$("#mainDescFRUI").empty();
-		$("#mainDescFRUI").append(model.getDish(model.selected.mainDishID).description);
-		$(".fullrecipeUI .element .main img").attr('src',model.getDish(model.selected.mainDishID).image); 
-
-		$("#dessertNameFRUI").empty();
-		$("#dessertNameFRUI").append(model.getDish(model.selected.dessertID).name);
-		$("#dessertDescFRUI").empty();
-		$("#dessertDescFRUI").append(model.getDish(model.selected.dessertID).description);
-		$(".fullrecipeUI .element .dessert img").attr('src',model.getDish(model.selected.dessertID).image); 
-	});
 	
 	/** Filter functions **/
 	function displayDishes(type,filter){
@@ -126,55 +108,18 @@ var Controller = function (view,model) {
 		// Create listeners for all dishes regardless of whether they're actually displayed or not
 		dishListeners(idArray);
 	}
-		//plus guest in the mainUI
-	document.getElementById("plusGuest").addEventListener("click", function(){
-		// console.log(document.getElementById("guest").innerHTML);
-		//temp=document.getElementById("guest").innerHTML + 1;
+	
+	//plus guest in the mainUI
+	jQuery("#plusGuest").off().on("click", function(){
 		model.setNumberOfGuests(model.guests+1);
-		view.setGuests(model.guests);
-		PlottingRecipe();
-		var tempplus = model.getDishPrice(model.selected.starterID) + model.getDishPrice(model.selected.mainDishID) + model.getDishPrice(model.selected.dessertID);
-		view.setLeftTotal(tempplus * model.guests);
 	});
+	
 	//minus guest on the mainUI
-	document.getElementById("minusGuest").addEventListener("click", function(){ 
+	jQuery("#minusGuest").off().on("click", function(){ 
 		model.setNumberOfGuests(model.guests-1);
-		view.setGuests(model.guests);
-		PlottingRecipe();
 	});
-	
-	//Function that update the recipe on the left. So it can update when adding or removing a guest and changing the dish on the menu
 
-	PlottingRecipe = function(){
-		// view.emptyList();
-		var menuDishPrice = 0;
-		model.addDishToMenu(view.displayed);
-		if (model.selected.starterID !== 0)
-		{
-			view.addToList(model.getDish(model.selected.starterID).name,model.getDishPrice(model.selected.starterID));
-			menuDishPrice += model.getDishPrice(model.selected.starterID);
-		}	
-		if (model.selected.mainDishID !== 0)
-		{
-			view.addToList(model.getDish(model.selected.mainDishID).name,model.getDishPrice(model.selected.mainDishID));
-			menuDishPrice += model.getDishPrice(model.selected.mainDishID);
-		}
-		if (model.selected.dessertID !== 0)
-		{
-			view.addToList(model.getDish(model.selected.dessertID).name,model.getDishPrice(model.selected.dessertID));
-			menuDishPrice += model.getDishPrice(model.selected.dessertID);
-		}
-		
-		model.setTotalPerPerson(menuDishPrice);
-		model.setTotal(menuDishPrice * model.guests);
-	}
-
-	document.getElementById("confirmButton").addEventListener("click", function(){
-		PlottingRecipe();
-	});
-		
-	// selection of menu type
-	
+	// Selection of menu type
 	jQuery('select').change(function(){
 		displayDishes($(this).val(),false);
 		self.searchStatus = $(this).val();

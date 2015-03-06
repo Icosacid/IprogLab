@@ -24,37 +24,52 @@ var DinnerModel = function() {
 	this.totalPerPerson = null;
 	this.total = null;
 	
-	this.setNumberOfGuests = function(num) {
+	// Sets the number of guests
+	this.setNumberOfGuests = function(num){
 		if (num > 0 && num <= 42){
 			this.guests = num;
 		}
 		else {console.log("Guest number out of range");}
+		this.setTotals();// Update totals
 		this.notify();
 	}
-	this.setTotalPerPerson = function(num) {
-		this.totalPerPerson = num;
+	// Sets the values of totalPerPerson and total
+	this.setTotals = function(){
+		var menuDishPrice = 0;
+		if (this.selected.starterID !== 0)
+		{
+			menuDishPrice += this.getDishPrice(this.selected.starterID);
+		}
+		if (this.selected.mainDishID !== 0)
+		{
+			menuDishPrice += this.getDishPrice(this.selected.mainDishID);
+		}
+		if (this.selected.dessertID !== 0)
+		{
+			menuDishPrice += this.getDishPrice(this.selected.dessertID);
+		}
+		// Update 1
+		this.totalPerPerson = menuDishPrice;
+		// Update 2
+		this.total = this.totalPerPerson * this.guests;
+		// Notify
 		this.notify();
 	}
-	this.setTotal = function(num) {
-		this.total = num;
-		this.notify();
-	}
-	
 	// Returns number of guests
-	this.getNumberOfGuests = function() {
+	this.getNumberOfGuests = function(){
 		return this.guests;
 	}
 	// Returns total per person
-	this.getTotalPerPerson = function() {
+	this.getTotalPerPerson = function(){
 		return this.totalPerPerson;
 	}
 	// Returns total
-	this.getTotal = function() {
+	this.getTotal = function(){
 		return this.total;
 	}
 
 	//Returns the dish that is on the menu for selected type 
-	this.getSelectedDish = function(type) {
+	this.getSelectedDish = function(type){
 		if(type == 'starter'){
 			return this.getDish(this.selected.starterID);
 		}
@@ -68,7 +83,7 @@ var DinnerModel = function() {
 	}
 
 	//Returns all the dishes on the menu.
-	this.getFullMenu = function() {
+	this.getFullMenu = function(){
 		var menu = [];
 		// 3 different 'for' loops to have them in the order starter-main-dessert
 		// Starter
@@ -92,7 +107,7 @@ var DinnerModel = function() {
 	}
 
 	//Returns all ingredients for all the dishes on the menu.
-	this.getAllIngredients = function() {
+	this.getAllIngredients = function(){
 		var ingredients = [];
 		
 		for (var i=0;i<dishes.length;i++){
@@ -109,7 +124,7 @@ var DinnerModel = function() {
 	}
 
 	//Returns the total price of the menu (all the ingredients per guests).
-	this.getTotalMenuPrice = function() {
+	this.getTotalMenuPrice = function(){
 		var price = 0;
 		for (var i=0;i<dishes.length;i++){
 			// Is the current dish on the menu?
@@ -126,7 +141,7 @@ var DinnerModel = function() {
 
 	//Adds the passed dish to the menu. If the dish of that type already exists on the menu
 	//it is removed from the menu and the new one added.
-	this.addDishToMenu = function(id) {
+	this.addDishToMenu = function(id){
 		var dishType = this.getDish(id).type;
 		if (dishType == 'starter'){
 			this.selected.starterID = id;
@@ -138,12 +153,14 @@ var DinnerModel = function() {
 			this.selected.dessertID = id;
 		}
 		else{console.log("No match for dishType in addDishToMenu");}
+		// Notify
 		this.notify();
-		// Add call to updatePerPErsonPrice and Total
+		// Update totals
+		this.setTotals();// Which will notify too
 	}
 
 	//Removes dish from menu
-	this.removeDishFromMenu = function(id) {
+	this.removeDishFromMenu = function(id){
 		if (this.selected.startedID == id){
 			this.selected.startedID = 0;
 		}
@@ -160,7 +177,7 @@ var DinnerModel = function() {
 	//function that returns all dishes of specific type (i.e. "starter", "main dish" or "dessert")
 	//you can use the filter argument to filter out the dish by name or ingredient (use for search)
 	//if you don't pass any filter all the dishes will be returned
-	this.getAllDishes = function (type,filter) {
+	this.getAllDishes = function (type,filter){
 	  return $(dishes).filter(function(index,dish) {
 		var found = true;
 		if(filter){
@@ -188,7 +205,7 @@ var DinnerModel = function() {
 		return sumPrice;
 	}
 	//function that returns a dish of specific ID
-	this.getDish = function (id) {
+	this.getDish = function (id){
 	  for(key in dishes){
 			if(dishes[key].id == id) {
 				return dishes[key];
