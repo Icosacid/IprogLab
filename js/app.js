@@ -7,7 +7,7 @@ jQuery(document).ready(function(){
 	// Create the needed controllers and views
 	//console.log(model.getTotalMenuPrice());
 	var view1 = new View(jQuery("#whole"),model);
-	var controller = new Controller(view,model);
+	var controller = new Controller(view1,model);
 
 	//this.g = view.find("#guest");
 	$("#guest").append(model.getNumberOfGuests()); //add to be appened for the first printing of the page

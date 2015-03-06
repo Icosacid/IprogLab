@@ -1,7 +1,7 @@
 // View Object constructor
 var View = function (container,model){
 
-	model.addObserver(this);
+	model.attach(this);
 	
 	this.displayed = 0;
 	
@@ -19,6 +19,25 @@ var View = function (container,model){
 	this.emptyList= function(){
 		jQuery('#left .list').html('');
 	}
+	this.shapeList = function(){
+		var menuDishPrice = 0;
+		if (model.selected.starterID !== 0)
+		{
+			this.addToList(model.getDish(model.selected.starterID).name,model.getDishPrice(model.selected.starterID));
+			menuDishPrice += model.getDishPrice(model.selected.starterID);
+		}	
+		if (model.selected.mainDishID !== 0)
+		{
+			this.addToList(model.getDish(model.selected.mainDishID).name,model.getDishPrice(model.selected.mainDishID));
+			menuDishPrice += model.getDishPrice(model.selected.mainDishID);
+		}
+		if (model.selected.dessertID !== 0)
+		{
+			this.addToList(model.getDish(model.selected.dessertID).name,model.getDishPrice(model.selected.dessertID));
+			menuDishPrice += model.getDishPrice(model.selected.dessertID);
+		}
+		
+	}
 	this.setLeftTotalPerPerson = function(total){
 		jQuery('#left .pricearea .perpersonpricearea p.price').html(total);
 
@@ -29,7 +48,7 @@ var View = function (container,model){
 
 	/** SelectDish UI **/
 	this.clearBlocks = function(){
-		display.html('');
+		jQuery('.selectUI .display').html('');
 	}
 	this.addBlock = function(id,imgsrc,name,description){
 		var blockHTML = "<div class='block id"+id+"'><img src='"+imgsrc+"' alt='"+name+"'/><p class='name'>"+name+"</p><p class='description'>"+description+"</p></div>";
@@ -79,12 +98,15 @@ var View = function (container,model){
 	 * Unique update function that updates all DOM elements
 	 * @param  {Object} object !!!OPTIONAL!!! object with parameters for the update
 	 */
+
 	this.update = function(object){
 	
 		/** In several UI **/
 		this.setGuests(model.getNumberOfGuests());
 		
 		/** Left menu UI **/
+		//emptylist and refill list todo
+
 		this.setLeftTotalPerPerson(model.getTotalPerPerson());
 		this.setLeftTotal(model.getTotal());
 		

@@ -118,6 +118,7 @@ var Controller = function (view,model) {
 		
 		// Launch content to view (Clear the display+Add the blocks)
 		view.clearBlocks(); // Might remove all listeners
+
 		for (var key=0;key<dishes.length;key++){
 			view.addBlock(dishes[key].id,dishes[key].image,dishes[key].name,dishes[key].description);
 			idArray.push(dishes[key].id);
@@ -145,9 +146,9 @@ var Controller = function (view,model) {
 	//Function that update the recipe on the left. So it can update when adding or removing a guest and changing the dish on the menu
 
 	PlottingRecipe = function(){
-		view.emptyList();
-		model.addDishToMenu(view.displayed);
+		// view.emptyList();
 		var menuDishPrice = 0;
+		model.addDishToMenu(view.displayed);
 		if (model.selected.starterID !== 0)
 		{
 			view.addToList(model.getDish(model.selected.starterID).name,model.getDishPrice(model.selected.starterID));

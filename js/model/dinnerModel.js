@@ -1,6 +1,17 @@
 //DinnerModel Object constructor
 var DinnerModel = function() {
  	//
+ 	this._listeningViews = [];
+ 	this.attach = function (listeningView){
+ 		this._listeningViews.push(listeningView);
+ 		console.log(listeningView);
+ 	};
+ 	this.notify = function (args){
+ 		for(var i = 0; i< this._listeningViews.length; i++){
+ 			this._listeningViews[i].update();
+ 		}
+ 		console.log("notifying");
+ 	};
 	//TODO Lab 2 implement the data structure that will hold number of guest
 	// and selected dinner options for dinner menu
 	this.guests = 1;
@@ -18,12 +29,15 @@ var DinnerModel = function() {
 			this.guests = num;
 		}
 		else {console.log("Guest number out of range");}
+		this.notify();
 	}
 	this.setTotalPerPerson = function(num) {
 		this.totalPerPerson = num;
+		this.notify();
 	}
 	this.setTotal = function(num) {
 		this.total = num;
+		this.notify();
 	}
 	
 	// Returns number of guests
@@ -124,6 +138,8 @@ var DinnerModel = function() {
 			this.selected.dessertID = id;
 		}
 		else{console.log("No match for dishType in addDishToMenu");}
+		this.notify();
+		// Add call to updatePerPErsonPrice and Total
 	}
 
 	//Removes dish from menu
@@ -138,6 +154,7 @@ var DinnerModel = function() {
 			this.selected.dessertID = 0;
 		}
 		else {console.log("There was no dish to remove with id "+id);}
+		this.notify();
 	}
 
 	//function that returns all dishes of specific type (i.e. "starter", "main dish" or "dessert")
