@@ -91,21 +91,21 @@ var View = function (container,model){
 	this.shapeFinalRecipe = function(){
 		// Starter
 		if (model.selected.starterID !== 0){
-			$("#starterNameFRUI").html(model.getDish(model.selected.starterID).name);
-			$("#starterDescFRUI").html(model.getDish(model.selected.starterID).description);
-			$(".fullrecipeUI .element .starter img").attr('src',model.getDish(model.selected.starterID).image); 
+			jQuery("#starterNameFRUI").html(model.getDish(model.selected.starterID).name);
+			jQuery("#starterDescFRUI").html(model.getDish(model.selected.starterID).description);
+			jQuery(".fullrecipeUI .element .starter img").attr('src',model.getDish(model.selected.starterID).image); 
 		}
 		if (model.selected.mainDishID !== 0){
 			// Main Dish
-			$("#mainNameFRUI").html(model.getDish(model.selected.mainDishID).name);
-			$("#mainDescFRUI").html(model.getDish(model.selected.mainDishID).description);
-			$(".fullrecipeUI .element .main img").attr('src',model.getDish(model.selected.mainDishID).image);
+			jQuery("#mainNameFRUI").html(model.getDish(model.selected.mainDishID).name);
+			jQuery("#mainDescFRUI").html(model.getDish(model.selected.mainDishID).description);
+			jQuery(".fullrecipeUI .element .main img").attr('src',model.getDish(model.selected.mainDishID).image);
 		}
 		if (model.selected.dessertID !== 0){
 			// Dessert
-			$("#dessertNameFRUI").html(model.getDish(model.selected.dessertID).name);
-			$("#dessertDescFRUI").html(model.getDish(model.selected.dessertID).description);
-			$(".fullrecipeUI .element .dessert img").attr('src',model.getDish(model.selected.dessertID).image);
+			jQuery("#dessertNameFRUI").html(model.getDish(model.selected.dessertID).name);
+			jQuery("#dessertDescFRUI").html(model.getDish(model.selected.dessertID).description);
+			jQuery(".fullrecipeUI .element .dessert img").attr('src',model.getDish(model.selected.dessertID).image);
 		}
 	}
 	
