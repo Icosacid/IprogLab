@@ -1,14 +1,14 @@
 //DinnerModel Object constructor
 var DinnerModel = function() {
- 	//
+ 	var apiKey = "dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D";
  	this._listeningViews = [];
  	this.attach = function (listeningView){
  		this._listeningViews.push(listeningView);
- 		console.log(listeningView);
+ 		//console.log(listeningView);
  	};
  	this.notify = function (args){
  		for(var i = 0; i< this._listeningViews.length; i++){
- 			this._listeningViews[i].update();
+ 			this._listeningViews[i].update(args);
  		}
  		console.log("notifying");
  	};
@@ -195,6 +195,30 @@ var DinnerModel = function() {
 	  	return dish.type == type && found;
 	  });	
 	}
+
+	this.getAllDishesAPI = function(){
+
+	var url = "http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=10&api_key=dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D";
+	//"http://api.bigoven.com/recipe?include_primarycat="+type+"&pg=1&rpp="+nbrRes+"&api_key=dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D";
+	//http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D
+	 $.ajax({
+	         type: "GET",
+	         dataType: 'json',
+	         cache: false,
+	         url: url,
+	         context : this,
+	         success: function (data) {
+	         	// for (var i = 0; i < data.Results.length; i++) {
+	         	// 	console.log(data.Results[i]);
+	         	// };
+	         	this.notify(data.Results);
+	         	
+	            //callback(data);
+	            
+	            }
+	         });
+	 //this.notify();
+	}
 	this.getDishPrice= function(id){
 		console.log('getDishPrice called with id '+id);
 		var theDish = this.getDish(id);
@@ -223,6 +247,26 @@ var DinnerModel = function() {
 	this.countDishes = function(){
 		return dishes.length;
 	}
+
+	function getRecipeJson() {
+	var apiKey = "dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D";
+	//var recipeID = 196149;
+	var url = "http://api.bigoven.com/recipe?include_primarycat=" +"dessert"+ "&pg=1&rpp=20" +"&api_key="+apiKey;
+	//http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D
+	$.ajax({
+	         type: "GET",
+	         dataType: 'json',
+	         cache: false,
+	         url: "http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=" + apiKey,
+	         success: function (data) {
+	         	// for (var i = 0; i < data.Results.length; i++) {
+	         	// 	console.log(data.Results[i]);
+	         	// };
+	            }
+	         });
+	       }
+	getRecipeJson();
+
 	// the dishes variable contains an array of all the 
 	// dishes in the database. each dish has id, name, type,
 	// image (name of the image file), description and

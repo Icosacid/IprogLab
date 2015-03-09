@@ -1,15 +1,14 @@
 // Controller Object constructor
 var Controller = function (view,model){
-
+	 idArray = [];
 	/** Controller variables **/
 	var state = 1;
 	this.searchStatus = 'starter';
 	var self = this;
-	
 	/** Initial search type **/
 	displayDishes('starter',false);
 
-	/** Listeners to panels (forever in the DOM, <3) **/
+	/** Listeners to panels **/
 	// #hello listener
 	jQuery('#hello .create p').off().on('click',function(){
 		// Update state
@@ -94,18 +93,23 @@ var Controller = function (view,model){
 		// Retrieve data from model
 		var dishes = model.getAllDishes(type,filter);
 		console.log(type,filter,dishes);
-		
+		var type = "dessert";
+		var dishesAPI = model.getAllDishesAPI(type);
 		// Stores ID to attach listeners
-		var idArray = [];
 		
 		// Launch content to view (Clear the display+Add the blocks)
 		view.clearBlocks(); // Might remove all listeners
-
+		
+		// for (var key=0;key<dishesAPI.length;key++){
+		// 	this.addBlock(dishesAPI[key].RecipeID,dishesAPI[key].ImageURL,dishesAPI[key].Title,dishesAPI[key].WebURL);
+		// 	idArray.push(dishesAPI[key].RecipeID);
+		// }
 		for (var key=0;key<dishes.length;key++){
 			view.addBlock(dishes[key].id,dishes[key].image,dishes[key].name,dishes[key].description);
 			idArray.push(dishes[key].id);
 		}
 		// Create listeners for all dishes regardless of whether they're actually displayed or not
+		console.log(idArray);
 		dishListeners(idArray);
 	}
 	
@@ -135,7 +139,26 @@ var Controller = function (view,model){
 		if(isOK){
 			isOK = true;
 			// Load the content live! (= not use the button, actually...)
-			displayDishes(self.searchStatus,valval);
+		displayDishes(self.searchStatus,valval);
+        var titleKeyword = valval;
+        var url = "http://api.bigoven.com/recipes?pg=1&rpp=25&title_kw="
+                  + titleKeyword 
+                  + "&api_key="+apiKey;
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            cache: false,
+            url: url,
+            success: function (data) {
+                //alert('success');
+                displayDishes(self.searchStatus,data.Results);
+                for (i=0; i<data.Results.length; i++){
+                	console.log(data.Results[i]);
+                	
+                }
+                //console.log(data);
+        }
+    });
 		}
 		else{
 			isOK = false;

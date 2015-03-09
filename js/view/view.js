@@ -51,7 +51,7 @@ var View = function (container,model){
 	}
 	this.addBlock = function(id,imgsrc,name,description){
 		var blockHTML = "<div class='block id"+id+"'><img src='"+imgsrc+"' alt='"+name+"'/><p class='name'>"+name+"</p><p class='description'>"+description+"</p></div>";
-		console.log("appended: ",blockHTML);
+		//console.log("appended: ",blockHTML);
 		jQuery('.selectUI .display').append(blockHTML);
 	}
 	
@@ -114,13 +114,17 @@ var View = function (container,model){
 		jQuery('html').removeClass().addClass('state'+num);
 	}
 	
+
 	/** Update method for Observer pattern **/
 	/*
 	 * Unique update function that updates all DOM elements
 	 * @param  {Object} object !!!OPTIONAL!!! object with parameters for the update
 	 */
 	this.update = function(object){
-	
+		if (object.length == 10){
+		dishesAPI = object;
+		console.log(dishesAPI);
+	}
 		/** In several UI **/
 		this.setGuests();
 		
