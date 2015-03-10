@@ -6,8 +6,8 @@ var DinnerModel = function() {
  		this._listeningViews.push(listeningView);
  		//console.log(listeningView);
  	};
- 	this.notify = function (args){
- 		for(var i = 0; i< this._listeningViews.length; i++){
+ 	this.notify = function(args){
+ 		for(var i = 0; i < this._listeningViews.length; i++){
  			this._listeningViews[i].update(args);
  		}
  		console.log("notifying");
@@ -87,21 +87,21 @@ var DinnerModel = function() {
 		var menu = [];
 		// 3 different 'for' loops to have them in the order starter-main-dessert
 		// Starter
-		for (var i=0;i<dishes.length;i++){
-			if (dishes[i].id == this.selected.starterID){
-				menu.push(dishes[i]);
+		for (var i=0;i<this.dishes.length;i++){
+			if (this.dishes[i].id == this.selected.starterID){
+				menu.push(this.dishes[i]);
 			}
 		}
 		// Main dish
-		for (var i=0;i<dishes.length;i++){
-			if (dishes[i].id == this.selected.mainDishID){
-				menu.push(dishes[i]);
+		for (var i=0;i<this.dishes.length;i++){
+			if (this.dishes[i].id == this.selected.mainDishID){
+				menu.push(this.dishes[i]);
 			}
 		}
 		// Dessert
-		for (var i=0;i<dishes.length;i++){
-			if (dishes[i].id == this.selected.dessertID){
-				menu.push(dishes[i]);
+		for (var i=0;i<this.dishes.length;i++){
+			if (this.dishes[i].id == this.selected.dessertID){
+				menu.push(this.dishes[i]);
 			}
 		}
 	}
@@ -110,12 +110,12 @@ var DinnerModel = function() {
 	this.getAllIngredients = function(){
 		var ingredients = [];
 		
-		for (var i=0;i<dishes.length;i++){
+		for (var i=0;i<this.dishes.length;i++){
 			// Is the current dish on the menu?
 			// If so, add all ingredients
-			if (isDishOnMenu(dishes[i].id)){
-				for (var j=0;j<dishes[i].ingredients.length;j++){
-					ingredients.push(dishes[i].ingredients[j]);
+			if (isDishOnMenu(this.dishes[i].id)){
+				for (var j=0;j<this.dishes[i].ingredients.length;j++){
+					ingredients.push(this.dishes[i].ingredients[j]);
 				}
 			}
 		}
@@ -126,12 +126,12 @@ var DinnerModel = function() {
 	//Returns the total price of the menu (all the ingredients per guests).
 	this.getTotalMenuPrice = function(){
 		var price = 0;
-		for (var i=0;i<dishes.length;i++){
+		for (var i=0;i<this.dishes.length;i++){
 			// Is the current dish on the menu?
 			// If so, add price
-			if (this.isDishOnMenu(dishes[i].id)){
-				for (var j=0;j<dishes[i].ingredients.length;j++){
-					price += parseFloat(dishes[i].ingredients[j].price);
+			if (this.isDishOnMenu(this.dishes[i].id)){
+				for (var j=0;j<this.dishes[i].ingredients.length;j++){
+					price += parseFloat(this.dishes[i].ingredients[j].price);
 				}
 			}
 		}
@@ -178,7 +178,7 @@ var DinnerModel = function() {
 	//you can use the filter argument to filter out the dish by name or ingredient (use for search)
 	//if you don't pass any filter all the dishes will be returned
 	this.getAllDishes = function (type,filter){
-	  return $(dishes).filter(function(index,dish) {
+	  return $(this.dishes).filter(function(index,dish) {
 		var found = true;
 		if(filter){
 			found = false;
@@ -196,43 +196,20 @@ var DinnerModel = function() {
 	  });	
 	}
 
-	this.getAllDishesAPI = function(){
-
-	var url = "http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=10&api_key=dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D";
-	//"http://api.bigoven.com/recipe?include_primarycat="+type+"&pg=1&rpp="+nbrRes+"&api_key=dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D";
-	//http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D
-	 $.ajax({
-	         type: "GET",
-	         dataType: 'json',
-	         cache: false,
-	         url: url,
-	         context : this,
-	         success: function (data) {
-	         	// for (var i = 0; i < data.Results.length; i++) {
-	         	// 	console.log(data.Results[i]);
-	         	// };
-	         	this.notify(data.Results);
-	         	
-	            //callback(data);
-	            
-	            }
-	         });
-	 //this.notify();
-	}
-	this.getDishPrice= function(id){
+	this.getDishPrice = function(id){
 		console.log('getDishPrice called with id '+id);
 		var theDish = this.getDish(id);
 		var sumPrice = 0;
-			for(key in theDish.ingredients){
-				sumPrice += theDish.ingredients[key].price;
+		for(key in theDish.ingredients) {
+			sumPrice += theDish.ingredients[key].price;
 		}
 		return sumPrice;
 	}
 	//function that returns a dish of specific ID
 	this.getDish = function (id){
-	  for(key in dishes){
-			if(dishes[key].id == id) {
-				return dishes[key];
+	  for(key in this.dishes){
+			if(this.dishes[key].id == id) {
+				return this.dishes[key];
 			}
 		}
 	}
@@ -242,31 +219,48 @@ var DinnerModel = function() {
 		return (this.selected.starterID == id || this.selected.mainDishID == id || this.selected.dessertID == id);
 	}
 
-	// 
 	// function that returns the size of the dishes array
 	this.countDishes = function(){
-		return dishes.length;
+		return this.dishes.length;
 	}
 
-	function getRecipeJson() {
-	var apiKey = "dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D";
-	//var recipeID = 196149;
-	var url = "http://api.bigoven.com/recipe?include_primarycat=" +"dessert"+ "&pg=1&rpp=20" +"&api_key="+apiKey;
-	//http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D
-	$.ajax({
-	         type: "GET",
-	         dataType: 'json',
-	         cache: false,
-	         url: "http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=" + apiKey,
-	         success: function (data) {
-	         	// for (var i = 0; i < data.Results.length; i++) {
-	         	// 	console.log(data.Results[i]);
-	         	// };
-	            }
-	         });
-	       }
-	getRecipeJson();
-
+	this.getRecipeJson = function() {
+		var apiKey = "dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D";
+		//var recipeID = 196149;
+		var url = "http://api.bigoven.com/recipe?include_primarycat=" +"dessert"+ "&pg=1&rpp=20" +"&api_key="+apiKey;
+		//http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D
+		
+		var self = this;
+		
+		$.ajax({
+			type: "GET",
+			dataType: 'json',
+			cache: false,
+			url: "http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=" + apiKey,
+			success: function (data) {
+				console.log(data);
+				for (var i = 0; i < data.Results.length; i++) {
+				 	console.log(data.Results[i]);
+				};
+				// Very good reflex to console.log the results
+				// Now you just have to fill your this.dishes with data from data.Results
+				// the value of "this" is changed every time you enter a new function (we get to the concept of scope and closure, not so easy)
+				// And here we do enter a new closure with $.ajax({...});
+				// To keep on refering to the model's this.dishes, we'll use a trick using another variable that will replace this
+				// Let's call it "self"
+				self.dishes = [];
+				// Now dishes is an empty array, you have to fill it in the good format!
+				// ------
+				// self.dishes = ...
+				// ------
+				self.notify();
+				// Actually, the set of dishes displayed in selectUI is not updated by view.update()
+				// Which means you will still see the initial search result (the 3 starters) but any other research will search an empty array of dishes
+				// You can try to use view.clearBlocks() in a nice way :) like after model.getRecipeJson in the controller... ça passera crème
+			}
+		});
+	}
+	
 	// the dishes variable contains an array of all the 
 	// dishes in the database. each dish has id, name, type,
 	// image (name of the image file), description and
@@ -275,7 +269,7 @@ var DinnerModel = function() {
 	// defining the unit i.e. "g", "slices", "ml". Unit
 	// can sometimes be empty like in the example of eggs where
 	// you just say "5 eggs" and not "5 pieces of eggs" or anything else.
-	var dishes = [{
+	this.dishes = [{
 		'id':1,
 		'name':'French toast',
 		'type':'starter',

@@ -121,10 +121,11 @@ var View = function (container,model){
 	 * @param  {Object} object !!!OPTIONAL!!! object with parameters for the update
 	 */
 	this.update = function(object){
-		if (object.length == 10){
-		dishesAPI = object;
-		console.log(dishesAPI);
-	}
+		if (typeof object !== "undefined" && object.length == 10){
+			var dishesAPI = object;
+			console.log(dishesAPI);
+		}
+		
 		/** In several UI **/
 		this.setGuests();
 		

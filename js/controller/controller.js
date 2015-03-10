@@ -1,13 +1,19 @@
 // Controller Object constructor
 var Controller = function (view,model){
-	 idArray = [];
+
+	idArray = [];
+	
 	/** Controller variables **/
 	var state = 1;
 	this.searchStatus = 'starter';
 	var self = this;
+	
 	/** Initial search type **/
 	displayDishes('starter',false);
 
+	/** Initial AJAX load **/
+	model.getRecipeJson();
+	
 	/** Listeners to panels **/
 	// #hello listener
 	jQuery('#hello .create p').off().on('click',function(){
@@ -25,7 +31,7 @@ var Controller = function (view,model){
 	});
 	
 	// Back from DishUI to selectUI but with dish selection
-	jQuery("#confirmButton").off().on("click", function(){
+	jQuery('#confirmButton').off().on('click', function(){
 		state = 2;
 		view.state(2);
 		model.addDishToMenu(view.displayed);
@@ -93,8 +99,6 @@ var Controller = function (view,model){
 		// Retrieve data from model
 		var dishes = model.getAllDishes(type,filter);
 		console.log(type,filter,dishes);
-		var type = "dessert";
-		var dishesAPI = model.getAllDishesAPI(type);
 		// Stores ID to attach listeners
 		
 		// Launch content to view (Clear the display+Add the blocks)
@@ -114,12 +118,12 @@ var Controller = function (view,model){
 	}
 	
 	//plus guest in the mainUI
-	jQuery("#plusGuest").off().on("click", function(){
+	jQuery('#plusGuest').off().on('click', function(){
 		model.setNumberOfGuests(model.guests+1);
 	});
 	
 	//minus guest on the mainUI
-	jQuery("#minusGuest").off().on("click", function(){ 
+	jQuery('#minusGuest').off().on('click', function(){ 
 		model.setNumberOfGuests(model.guests-1);
 	});
 
