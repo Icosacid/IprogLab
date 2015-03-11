@@ -2,7 +2,7 @@
 var Controller = function (view,model){
 
 	idArray = [];
-	
+
 	/** Controller variables **/
 	var state = 1;
 	this.searchStatus = 'starter';
@@ -12,7 +12,9 @@ var Controller = function (view,model){
 	displayDishes('starter',false);
 
 	/** Initial AJAX load **/
-	model.getRecipeJson();
+	model.getRecipeJson(function(){
+   console.log("OK");//self.displayDishes('starter',false);
+	});
 	
 	/** Listeners to panels **/
 	// #hello listener
@@ -79,25 +81,27 @@ var Controller = function (view,model){
 	function dishListeners(idArray){
 		console.log("Controller.dishListeners() called");
 		
-		for (key in idArray){
+		for (key in idArray){		//return the food that correspond to the id 
 			(function(key){
 				jQuery('.selectUI .display .block.id'+idArray[key]+' *').off().on('click',function(){
 					console.log("Click detected");
 					state = 3;
 					view.state(3);
-					var dish = model.getDish(idArray[key]);
-					view.loadDishUI(dish.id,dish.name,dish.image,dish.description,dish.ingredients,model.guests);
+					console.log(idArray[key]);
+					model.getDishAPI(idArray[key], function(){var dish = model.getDish(idArray[key]); 
+					view.loadDishUI(dish.RecipeID,dish.Title,dish.ImageURL,dish.Subcategory,dish.Ingredients,model.guests);	
+					});
 				});
 			})(key);
 		}
 	};
-	
+
 	/** Filter functions **/
 	function displayDishes(type,filter){
 		console.log("Controller.displayDishes() called");
 		
 		// Retrieve data from model
-		var dishes = model.getAllDishes(type,filter);
+		var dishes = model.getAllDishes();
 		console.log(type,filter,dishes);
 		// Stores ID to attach listeners
 		
@@ -109,8 +113,8 @@ var Controller = function (view,model){
 		// 	idArray.push(dishesAPI[key].RecipeID);
 		// }
 		for (var key=0;key<dishes.length;key++){
-			view.addBlock(dishes[key].id,dishes[key].image,dishes[key].name,dishes[key].description);
-			idArray.push(dishes[key].id);
+			view.addBlock(dishes[key].RecipeID,dishes[key].ImageURL,dishes[key].Title,dishes[key].Subcategory);
+			idArray.push(dishes[key].RecipeID);
 		}
 		// Create listeners for all dishes regardless of whether they're actually displayed or not
 		console.log(idArray);
@@ -143,26 +147,30 @@ var Controller = function (view,model){
 		if(isOK){
 			isOK = true;
 			// Load the content live! (= not use the button, actually...)
-		displayDishes(self.searchStatus,valval);
-        var titleKeyword = valval;
-        var url = "http://api.bigoven.com/recipes?pg=1&rpp=25&title_kw="
-                  + titleKeyword 
-                  + "&api_key="+apiKey;
-        $.ajax({
-            type: "GET",
-            dataType: 'json',
-            cache: false,
-            url: url,
-            success: function (data) {
-                //alert('success');
-                displayDishes(self.searchStatus,data.Results);
-                for (i=0; i<data.Results.length; i++){
-                	console.log(data.Results[i]);
+
+	model.getRecipeJson(function(){
+		displayDishes();
+	});
+		// displayDishes(self.searchStatus,valval);
+  //       var titleKeyword = valval;
+  //       var url = "http://api.bigoven.com/recipes?pg=1&rpp=25&title_kw="
+  //                 + titleKeyword 
+  //                 + "&api_key="+apiKey;
+  //       // $.ajax({
+  //       //     type: "GET",
+  //       //     dataType: 'json',
+  //       //     cache: false,
+  //       //     url: url,
+  //       //     success: function (data) {
+  //       //         //alert('success');
+  //       //         displayDishes(self.searchStatus,data.Results);
+  //       //         for (i=0; i<data.Results.length; i++){
+  //       //         	console.log(data.Results[i]);
                 	
-                }
-                //console.log(data);
-        }
-    });
+  //       //         }
+  //       //         //console.log(data);
+  //       // }
+    // });
 		}
 		else{
 			isOK = false;

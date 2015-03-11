@@ -71,10 +71,10 @@ var View = function (container,model){
 		var totalPersonPrice = 0;
 		for (key in ingredients){
 			// Filled html row
-			var rowHTML = '<div class="row"><p class="quantity">'+ingredients[key].quantity*guests+" "+ingredients[key].unit+'</p><p class="what">'+ingredients[key].name+'</p><p class="unit">SEK</p><p class="price">'+ingredients[key].price*guests+'</p></div>';
+			var rowHTML = '<div class="row"><p class="quantity">'+ingredients[key].MetricQuantity*guests+" "+ingredients[key].MetricUnit+'</p><p class="what">'+ingredients[key].Name+'</p><p class="unit">SEK</p><p class="price">'+ingredients[key].Quantity*guests+'</p></div>';
 			// Append it
 			jQuery('.dishUI .ingredients .inglist').append(rowHTML);
-			totalPersonPrice += ingredients[key].price;
+			totalPersonPrice += ingredients[key].Quantity;
 		}
 		jQuery('.dishUI .ingredients .bottom p.total').html(totalPersonPrice*guests);
 	}
@@ -121,7 +121,8 @@ var View = function (container,model){
 	 * @param  {Object} object !!!OPTIONAL!!! object with parameters for the update
 	 */
 	this.update = function(object){
-		if (typeof object !== "undefined" && object.length == 10){
+		
+		if (typeof object !== "undefined" && object.length == 20){
 			var dishesAPI = object;
 			console.log(dishesAPI);
 		}

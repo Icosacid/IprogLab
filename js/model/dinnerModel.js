@@ -178,42 +178,24 @@ var DinnerModel = function() {
 	//you can use the filter argument to filter out the dish by name or ingredient (use for search)
 	//if you don't pass any filter all the dishes will be returned
 	this.getAllDishes = function (type,filter){
-	  return $(this.dishes).filter(function(index,dish) {
-		var found = true;
-		if(filter){
-			found = false;
-			$.each(dish.ingredients,function(index,ingredient) {
-				if(ingredient.name.indexOf(filter)!=-1) {
-					found = true;
-				}
-			});
-			if(dish.name.indexOf(filter) != -1)
-			{
-				found = true;
-			}
-		}
-	  	return dish.type == type && found;
-	  });	
+	 return this.dishes;
+	 //  return $(this.dishes).filter(function(index,dish) {
+		// var found = true;
+		// if(filter){
+		// 	found = false;
+		// 	$.each(dish.ingredients,function(index,ingredient) {
+		// 		if(ingredient.name.indexOf(filter)!=-1) {
+		// 			found = true;
+		// 		}
+		// 	});
+		// 	if(dish.name.indexOf(filter) != -1)
+		// 	{
+		// 		found = true;
+		// 	}
+		// }
+	 //  	return dish.type == type && found;
+	 //  });	
 	}
-
-	this.getDishPrice = function(id){
-		console.log('getDishPrice called with id '+id);
-		var theDish = this.getDish(id);
-		var sumPrice = 0;
-		for(key in theDish.ingredients) {
-			sumPrice += theDish.ingredients[key].price;
-		}
-		return sumPrice;
-	}
-	//function that returns a dish of specific ID
-	this.getDish = function (id){
-	  for(key in this.dishes){
-			if(this.dishes[key].id == id) {
-				return this.dishes[key];
-			}
-		}
-	}
-	
 	// function that checks if the dish is on the menu
 	this.isDishOnMenu = function(id){
 		return (this.selected.starterID == id || this.selected.mainDishID == id || this.selected.dessertID == id);
@@ -223,8 +205,47 @@ var DinnerModel = function() {
 	this.countDishes = function(){
 		return this.dishes.length;
 	}
+	this.getDishPrice = function(id){
+		console.log('getDishPrice called with id '+id);
+		var theDish = this.getDish(id);
+		var sumPrice = 0;
+		for(key in theDish.ingredients) {
+			sumPrice += theDish.ingredients[key].price;
+		}
+		return sumPrice;
+	}
+		var dishtest;
+	//function that returns a dish of specific ID
+	this.getDish = function (id){
+		console.log(dishtest);
+		return dishtest;
+	 //  for(key in this.dishes){
+	 //  	  console.log(this.dishes[key].RecipeID);
+		// 	if(this.dishes[key].RecipeID == id) {
+		// 		return this.dishes[key];
+		// 	}
+		// }
+	}
 
-	this.getRecipeJson = function() {
+	this.getDishAPI = function(recipeID, callback) {
+		var apiKey = "dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D";
+
+		// var recipeID = 196149;
+		var url = "http://api.bigoven.com/recipe/" + recipeID + "?api_key="+apiKey;
+		 $.ajax({
+         type: "GET",
+         dataType: 'json',
+         cache: false,
+         url: url,
+         success: function (data) {
+            console.log(data);
+           	dishtest = data;
+            callback();
+            }
+         });
+       }
+
+	this.getRecipeJson = function(callback) {
 		var apiKey = "dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D";
 		//var recipeID = 196149;
 		var url = "http://api.bigoven.com/recipe?include_primarycat=" +"dessert"+ "&pg=1&rpp=20" +"&api_key="+apiKey;
@@ -238,25 +259,16 @@ var DinnerModel = function() {
 			cache: false,
 			url: "http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=" + apiKey,
 			success: function (data) {
-				console.log(data);
-				for (var i = 0; i < data.Results.length; i++) {
-				 	console.log(data.Results[i]);
-				};
-				// Very good reflex to console.log the results
-				// Now you just have to fill your this.dishes with data from data.Results
-				// the value of "this" is changed every time you enter a new function (we get to the concept of scope and closure, not so easy)
-				// And here we do enter a new closure with $.ajax({...});
-				// To keep on refering to the model's this.dishes, we'll use a trick using another variable that will replace this
-				// Let's call it "self"
+				
 				self.dishes = [];
-				// Now dishes is an empty array, you have to fill it in the good format!
-				// ------
-				// self.dishes = ...
-				// ------
-				self.notify();
-				// Actually, the set of dishes displayed in selectUI is not updated by view.update()
-				// Which means you will still see the initial search result (the 3 starters) but any other research will search an empty array of dishes
-				// You can try to use view.clearBlocks() in a nice way :) like after model.getRecipeJson in the controller... ça passera crème
+				for (var i = 0; i < data.Results.length; i++) {
+				 	self.dishes.push(data.Results[i]);
+				};
+
+				// console.log(self.dishes);
+				// self.notify(self.dishes);
+				callback();
+
 			}
 		});
 	}
