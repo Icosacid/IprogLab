@@ -335,7 +335,7 @@ body{
 	width:100%;
 	height:100%;
 	display:none;
-	overflow: scroll;
+
 }
 .state2 .selectUI{
 	display:inherit;
@@ -645,7 +645,7 @@ body{
 	height:85%;
 	top:20%;
 }
-.confirmUI .summary .starter,
+.confirmUI .summary .Salad,
 .confirmUI .summary .maindish,
 .confirmUI .summary .dessert{
 	width:12%;
@@ -657,7 +657,7 @@ body{
 	float:left;
 	left:25%;
 }
-.confirmUI .summary .starter img,
+.confirmUI .summary .Salad img,
 .confirmUI .summary .maindish img,
 .confirmUI .summary .dessert img{
 	width:96%;
@@ -665,7 +665,7 @@ body{
 	border:rgba(0,0,0,0.8) solid 3px;
 	border-radius:2px;
 }
-.confirmUI .summary .starter p.name,
+.confirmUI .summary .Salad p.name,
 .confirmUI .summary .maindish p.name,
 .confirmUI .summary .dessert p.name{
 	width:96%;
@@ -676,7 +676,7 @@ body{
 	color:rgba(0,0,0,0.8);
 	border:rgba(0,0,0,0.8) solid 3px;
 }
-.confirmUI .summary .starter p.description,
+.confirmUI .summary .Salad p.description,
 .confirmUI .summary .maindish p.description,
 .confirmUI .summary .dessert p.description{
 	top:52%;
@@ -685,7 +685,7 @@ body{
 	white-space:pre-wrap;
 	text-align:center;
 }
-.confirmUI .summary .starter p.price,
+.confirmUI .summary .Salad p.price,
 .confirmUI .summary .maindish p.price,
 .confirmUI .summary .dessert p.price{
 	top:52%;
@@ -694,7 +694,7 @@ body{
 	right:25%;
 	font-size:13px;
 }
-.confirmUI .summary .starter p.unit,
+.confirmUI .summary .Salad p.unit,
 .confirmUI .summary .maindish p.unit,
 .confirmUI .summary .dessert p.unit{
 	top:52%;
@@ -704,7 +704,7 @@ body{
 	font-size:13px;
 	text-align:right;
 }
-.confirmUI .summary .starter{
+.confirmUI .summary .Salad{
 
 }
 .confirmUI .summary .maindish{
@@ -791,13 +791,13 @@ body{
 	width:100%;
 	height:160px;
 }
-.fullrecipeUI .element .starter ,
+.fullrecipeUI .element .Salad ,
 .fullrecipeUI .element .main,
 .fullrecipeUI .element .dessert{
 	width:50%;
 	height:100%;
 }
-.fullrecipeUI .element .starter img,
+.fullrecipeUI .element .Salad img,
 .fullrecipeUI .element .main img,
 .fullrecipeUI .element .dessert img{
 	width:120px;

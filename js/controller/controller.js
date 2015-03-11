@@ -5,15 +5,15 @@ var Controller = function (view,model){
 
 	/** Controller variables **/
 	var state = 1;
-	this.searchStatus = 'starter';
+	this.searchStatus = 'Salad';
 	var self = this;
 	
 	/** Initial search type **/
-	displayDishes('starter',false);
+	
 
 	/** Initial AJAX load **/
-	model.getRecipeJson(function(){
-   console.log("OK");//self.displayDishes('starter',false);
+	model.getRecipeJson(jQuery('select').val(), function(){
+   displayDishes();
 	});
 	
 	/** Listeners to panels **/
@@ -36,6 +36,7 @@ var Controller = function (view,model){
 	jQuery('#confirmButton').off().on('click', function(){
 		state = 2;
 		view.state(2);
+		console.log(view.displayed);
 		model.addDishToMenu(view.displayed);
 	});
 	
@@ -45,18 +46,18 @@ var Controller = function (view,model){
 		view.state(4);
 		console.log("confirmUI");
 
-		//Set the right starter, main dish and dessert
-		$("#starterName").html(model.getDish(model.selected.starterID).name);
-		$("#starterPrice").html(model.getDishPrice(model.selected.starterID));
-		//$(".confirmUI .summary .starter img").empty();
-		$(".confirmUI .summary .starter img").attr('src',model.getDish(model.selected.starterID).image); 
+		//Set the right Salad, main dish and dessert
+		//$("#SaladName").html(model.getDish(model.selected.SaladID).Title);
+		$("#SaladPrice").html(model.getDishPrice(model.selected.SaladID));
+		//$(".confirmUI .summary .Salad img").empty();
+		$(".confirmUI .summary .Salad img").attr('src',model.getDish(model.selected.SaladID).ImageURL); 
 
-		$("#mainName").html(model.getDish(model.selected.mainDishID).name);
+		$("#main").html(model.getDish(model.selected.mainDishID).Title);
 		$("#mainPrice").html(model.getDishPrice(model.selected.mainDishID));
-		$(".confirmUI .summary .maindish img").attr('src',model.getDish(model.selected.mainDishID).image); 
-		$("#dessertName").html(model.getDish(model.selected.dessertID).name);
+		$(".confirmUI .summary .maindish img").attr('src',model.getDish(model.selected.mainDishID).ImageURL); 
+		$("#dessertName").html(model.getDish(model.selected.dessertID).Title);
 		$("#dessertPrice").html(model.getDishPrice(model.selected.dessertID));
-		$(".confirmUI .summary .dessert img").attr('src',model.getDish(model.selected.dessertID).image); 
+		$(".confirmUI .summary .dessert img").attr('src',model.getDish(model.selected.dessertID).ImageURL); 
 
 
 	});
@@ -88,8 +89,9 @@ var Controller = function (view,model){
 					state = 3;
 					view.state(3);
 					console.log(idArray[key]);
-					model.getDishAPI(idArray[key], function(){var dish = model.getDish(idArray[key]); 
-					view.loadDishUI(dish.RecipeID,dish.Title,dish.ImageURL,dish.Subcategory,dish.Ingredients,model.guests);	
+					model.getDishAPI(idArray[key], function(){
+						var dish = model.getDish(idArray[key]); 
+						view.loadDishUI(dish.RecipeID,dish.Title,dish.ImageURL,dish.Subcategory,dish.Ingredients,model.guests);	
 					});
 				});
 			})(key);
@@ -133,10 +135,12 @@ var Controller = function (view,model){
 
 	// Selection of menu type
 	jQuery('select').change(function(){
-		displayDishes($(this).val(),false);
+		model.getRecipeJson(jQuery('select').val(), function(){
+		displayDishes();
+	});
+		// displayDishes($(this).val(),false);
 		self.searchStatus = $(this).val();
 	});
-	
 	/** Listener for search bar **/
 	var isOK = false;
 	var validRegex = /\w{2,}/;//2 or more characters
@@ -147,30 +151,9 @@ var Controller = function (view,model){
 		if(isOK){
 			isOK = true;
 			// Load the content live! (= not use the button, actually...)
-
-	model.getRecipeJson(function(){
+	model.getSearchRecipeJson(jQuery('select').val(),valval, function(){
 		displayDishes();
 	});
-		// displayDishes(self.searchStatus,valval);
-  //       var titleKeyword = valval;
-  //       var url = "http://api.bigoven.com/recipes?pg=1&rpp=25&title_kw="
-  //                 + titleKeyword 
-  //                 + "&api_key="+apiKey;
-  //       // $.ajax({
-  //       //     type: "GET",
-  //       //     dataType: 'json',
-  //       //     cache: false,
-  //       //     url: url,
-  //       //     success: function (data) {
-  //       //         //alert('success');
-  //       //         displayDishes(self.searchStatus,data.Results);
-  //       //         for (i=0; i<data.Results.length; i++){
-  //       //         	console.log(data.Results[i]);
-                	
-  //       //         }
-  //       //         //console.log(data);
-  //       // }
-    // });
 		}
 		else{
 			isOK = false;

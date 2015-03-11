@@ -1,6 +1,6 @@
 //DinnerModel Object constructor
 var DinnerModel = function() {
- 	var apiKey = "dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D";
+ 	var apiKey = "dvxpWrF1lW3ITKs85zY3e6q7UnVE7zUD";
  	this._listeningViews = [];
  	this.attach = function (listeningView){
  		this._listeningViews.push(listeningView);
@@ -16,7 +16,7 @@ var DinnerModel = function() {
 	// and selected dinner options for dinner menu
 	this.guests = 1;
 	this.selected = {
-		starterID : 0,
+		SaladID : 0,
 		mainDishID : 0,
 		dessertID : 0,
 	};
@@ -36,9 +36,9 @@ var DinnerModel = function() {
 	// Sets the values of totalPerPerson and total
 	this.setTotals = function(){
 		var menuDishPrice = 0;
-		if (this.selected.starterID !== 0)
+		if (this.selected.SaladID !== 0)
 		{
-			menuDishPrice += this.getDishPrice(this.selected.starterID);
+			menuDishPrice += this.getDishPrice(this.selected.SaladID);
 		}
 		if (this.selected.mainDishID !== 0)
 		{
@@ -70,8 +70,8 @@ var DinnerModel = function() {
 
 	//Returns the dish that is on the menu for selected type 
 	this.getSelectedDish = function(type){
-		if(type == 'starter'){
-			return this.getDish(this.selected.starterID);
+		if(type == 'Salad'){
+			return this.getDish(this.selected.SaladID);
 		}
 		else if(type == 'main dish'){
 			return this.getDish(this.selected.mainDishID);
@@ -85,10 +85,10 @@ var DinnerModel = function() {
 	//Returns all the dishes on the menu.
 	this.getFullMenu = function(){
 		var menu = [];
-		// 3 different 'for' loops to have them in the order starter-main-dessert
-		// Starter
+		// 3 different 'for' loops to have them in the order Salad-main-dessert
+		// Salad
 		for (var i=0;i<this.dishes.length;i++){
-			if (this.dishes[i].id == this.selected.starterID){
+			if (this.dishes[i].id == this.selected.SaladID){
 				menu.push(this.dishes[i]);
 			}
 		}
@@ -126,6 +126,7 @@ var DinnerModel = function() {
 	//Returns the total price of the menu (all the ingredients per guests).
 	this.getTotalMenuPrice = function(){
 		var price = 0;
+		console.log(this.dishes);
 		for (var i=0;i<this.dishes.length;i++){
 			// Is the current dish on the menu?
 			// If so, add price
@@ -141,22 +142,34 @@ var DinnerModel = function() {
 
 	//Adds the passed dish to the menu. If the dish of that type already exists on the menu
 	//it is removed from the menu and the new one added.
+
+					
 	this.addDishToMenu = function(id){
-		var dishType = this.getDish(id).type;
-		if (dishType == 'starter'){
-			this.selected.starterID = id;
-		}
-		else if (dishType == 'main dish'){
-			this.selected.mainDishID = id;
-		}
-		else if (dishType == 'dessert'){
-			this.selected.dessertID = id;
-		}
-		else{console.log("No match for dishType in addDishToMenu");}
-		// Notify
-		this.notify();
-		// Update totals
-		this.setTotals();// Which will notify too
+		context = this ;
+
+		this.getDishAPI(id, function(){
+			var dishType = context.getDish(id).Category;
+				if (dishType== 'Salad'){
+					context.selected.SaladID = id;
+					context.notify();
+				}
+				else if (dishType == 'Main Dish'){
+					context.selected.mainDishID = id;
+					context.notify();
+				}
+				else if (dishType == 'Desserts'){
+					context.selected.dessertID = id;
+					context.notify();
+				}
+				else{console.log("No match for dishType in addDishToMenu");}
+				
+				// Notify
+				console.log(context.selected);
+				
+				// Update totals
+				context.setTotals();// Which will notify too
+		});
+
 	}
 
 	//Removes dish from menu
@@ -174,31 +187,15 @@ var DinnerModel = function() {
 		this.notify();
 	}
 
-	//function that returns all dishes of specific type (i.e. "starter", "main dish" or "dessert")
+	//function that returns all dishes of specific type (i.e. "Salad", "main dish" or "dessert")
 	//you can use the filter argument to filter out the dish by name or ingredient (use for search)
 	//if you don't pass any filter all the dishes will be returned
 	this.getAllDishes = function (type,filter){
-	 return this.dishes;
-	 //  return $(this.dishes).filter(function(index,dish) {
-		// var found = true;
-		// if(filter){
-		// 	found = false;
-		// 	$.each(dish.ingredients,function(index,ingredient) {
-		// 		if(ingredient.name.indexOf(filter)!=-1) {
-		// 			found = true;
-		// 		}
-		// 	});
-		// 	if(dish.name.indexOf(filter) != -1)
-		// 	{
-		// 		found = true;
-		// 	}
-		// }
-	 //  	return dish.type == type && found;
-	 //  });	
+	 return this.dishes;	
 	}
 	// function that checks if the dish is on the menu
 	this.isDishOnMenu = function(id){
-		return (this.selected.starterID == id || this.selected.mainDishID == id || this.selected.dessertID == id);
+		return (this.selected.SaladID == id || this.selected.mainDishID == id || this.selected.dessertID == id);
 	}
 
 	// function that returns the size of the dishes array
@@ -206,29 +203,26 @@ var DinnerModel = function() {
 		return this.dishes.length;
 	}
 	this.getDishPrice = function(id){
+		context = this;
 		console.log('getDishPrice called with id '+id);
-		var theDish = this.getDish(id);
-		var sumPrice = 0;
-		for(key in theDish.ingredients) {
-			sumPrice += theDish.ingredients[key].price;
-		}
-		return sumPrice;
+			var theDish = context.getDish(id);
+			console.log(theDish);
+			var sumPrice = 0;
+			for(key in theDish.Ingredients) {
+				sumPrice += theDish.Ingredients[key].Quantity;
+			}
+			console.log(sumPrice);
+			return sumPrice;
 	}
-		var dishtest;
+
+	var dishtest;
 	//function that returns a dish of specific ID
 	this.getDish = function (id){
-		console.log(dishtest);
 		return dishtest;
-	 //  for(key in this.dishes){
-	 //  	  console.log(this.dishes[key].RecipeID);
-		// 	if(this.dishes[key].RecipeID == id) {
-		// 		return this.dishes[key];
-		// 	}
-		// }
 	}
 
 	this.getDishAPI = function(recipeID, callback) {
-		var apiKey = "dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D";
+		var apiKey = "dvxpWrF1lW3ITKs85zY3e6q7UnVE7zUD";
 
 		// var recipeID = 196149;
 		var url = "http://api.bigoven.com/recipe/" + recipeID + "?api_key="+apiKey;
@@ -245,19 +239,18 @@ var DinnerModel = function() {
          });
        }
 
-	this.getRecipeJson = function(callback) {
-		var apiKey = "dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D";
+	this.getRecipeJson = function(type, callback) {
+		var apiKey = "dvxpWrF1lW3ITKs85zY3e6q7UnVE7zUD";
 		//var recipeID = 196149;
-		var url = "http://api.bigoven.com/recipe?include_primarycat=" +"dessert"+ "&pg=1&rpp=20" +"&api_key="+apiKey;
-		//http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=dvx6tM1B68xpaHKJ1uEv8f3RW3bl4a6D
-		
+		var url = "http://api.bigoven.com/recipe?include_primarycat=" +type+ "&pg=1&rpp=20" +"&api_key="+apiKey;
+		//http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=dvxpWrF1lW3ITKs85zY3e6q7UnVE7zUD
 		var self = this;
 		
 		$.ajax({
 			type: "GET",
 			dataType: 'json',
 			cache: false,
-			url: "http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=" + apiKey,
+			url: "http://api.bigoven.com/recipes?include_primarycat="+type+"&pg=1&rpp=20&api_key=" + apiKey,
 			success: function (data) {
 				
 				self.dishes = [];
@@ -265,8 +258,32 @@ var DinnerModel = function() {
 				 	self.dishes.push(data.Results[i]);
 				};
 
-				// console.log(self.dishes);
-				// self.notify(self.dishes);
+				self.notify(self.dishes);
+				callback();
+
+			}
+		});
+	}
+	this.getSearchRecipeJson = function(type, Keyword, callback) {
+		var apiKey = "dvxpWrF1lW3ITKs85zY3e6q7UnVE7zUD";
+		//var recipeID = 196149;
+		//var url = "http://api.bigoven.com/recipe?include_primarycat=" +type+ "&pg=1&rpp=20" +"&api_key="+apiKey;
+		//http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=dvxpWrF1lW3ITKs85zY3e6q7UnVE7zUD
+		var self = this;
+		
+		$.ajax({
+			type: "GET",
+			dataType: 'json',
+			cache: false,
+			url : "http://api.bigoven.com/recipes?include_primarycat=" +type+ "&pg=1&rpp=20&any_kw="+Keyword+"&api_key="+apiKey,
+			success: function (data) {
+				console.log(data);
+				self.dishes = [];
+				for (var i = 0; i < data.Results.length; i++) {
+				 	self.dishes.push(data.Results[i]);
+				};
+
+				self.notify(self.dishes);
 				callback();
 
 			}
@@ -284,7 +301,7 @@ var DinnerModel = function() {
 	this.dishes = [{
 		'id':1,
 		'name':'French toast',
-		'type':'starter',
+		'type':'Salad',
 		'image':'images/toast.jpg',
 		'description':"In a large mixing bowl, beat the eggs. Add the milk, brown sugar and nutmeg; stir well to combine. Soak bread slices in the egg mixture until saturated. Heat a lightly oiled griddle or frying pan over medium high heat. Brown slices on both sides, sprinkle with cinnamon and serve hot.",
 		'ingredients':[{ 
@@ -315,8 +332,8 @@ var DinnerModel = function() {
 			}]
 		},{
 		'id':2,
-		'name':'Sourdough Starter',
-		'type':'starter',
+		'name':'Sourdough Salad',
+		'type':'Salad',
 		'image':'images/sourdough.jpg',
 		'description':"Here is how you make it... Lore ipsum...",
 		'ingredients':[{ 
@@ -338,7 +355,7 @@ var DinnerModel = function() {
 		},{
 		'id':3,
 		'name':'Baked Brie with Peaches',
-		'type':'starter',
+		'type':'Salad',
 		'image':'images/bakedbrie.jpg',
 		'description':"Here is how you make it... Lore ipsum...",
 		'ingredients':[{ 

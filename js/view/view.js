@@ -25,16 +25,19 @@ var View = function (container,model){
 		jQuery('#left .list').html('');
 	}
 	this.shapeList = function(){
-		if (model.selected.starterID !== 0){
-			this.addToList(model.getDish(model.selected.starterID).name,model.getDishPrice(model.selected.starterID));
+
+		if (model.selected.SaladID !== 0){
+			console.log(model.selected);
+			this.addToList(model.getDish(model.selected.SaladID).Title,model.getDishPrice(model.selected.SaladID));
 		}
 		if (model.selected.mainDishID !== 0){
-			this.addToList(model.getDish(model.selected.mainDishID).name,model.getDishPrice(model.selected.mainDishID));
+
+			this.addToList(model.getDish(model.selected.mainDishID).Title,model.getDishPrice(model.selected.mainDishID));
 		}
 		if (model.selected.dessertID !== 0){
-			this.addToList(model.getDish(model.selected.dessertID).name,model.getDishPrice(model.selected.dessertID));
+			this.addToList(model.getDish(model.selected.dessertID).Title,model.getDishPrice(model.selected.dessertID));
 		}
-		if (parseInt(model.selected.starterID + model.selected.mainDishID + model.selected.dessertID) == 0){
+		if (parseInt(model.selected.SaladID + model.selected.mainDishID + model.selected.dessertID) == 0){
 			this.addPendingLineToList();
 		}
 	}
@@ -89,23 +92,23 @@ var View = function (container,model){
 	
 	/** Full Recipe UI **/
 	this.shapeFinalRecipe = function(){
-		// Starter
-		if (model.selected.starterID !== 0){
-			jQuery("#starterNameFRUI").html(model.getDish(model.selected.starterID).name);
-			jQuery("#starterDescFRUI").html(model.getDish(model.selected.starterID).description);
-			jQuery(".fullrecipeUI .element .starter img").attr('src',model.getDish(model.selected.starterID).image); 
+		// Salad
+		if (model.selected.SaladID !== 0){
+			jQuery("#SaladNameFRUI").html(model.getDish(model.selected.SaladID).Title);
+			jQuery("#SaladDescFRUI").html(model.getDish(model.selected.SaladID).Subcategory);
+			jQuery(".fullrecipeUI .element .Salad img").attr('src',model.getDish(model.selected.SaladID).ImageURL); 
 		}
 		if (model.selected.mainDishID !== 0){
 			// Main Dish
-			jQuery("#mainNameFRUI").html(model.getDish(model.selected.mainDishID).name);
-			jQuery("#mainDescFRUI").html(model.getDish(model.selected.mainDishID).description);
-			jQuery(".fullrecipeUI .element .main img").attr('src',model.getDish(model.selected.mainDishID).image);
+			jQuery("#mainNameFRUI").html(model.getDish(model.selected.mainDishID).Title);
+			jQuery("#mainDescFRUI").html(model.getDish(model.selected.mainDishID).Subcategory);
+			jQuery(".fullrecipeUI .element .main img").attr('src',model.getDish(model.selected.mainDishID).ImageURL);
 		}
 		if (model.selected.dessertID !== 0){
 			// Dessert
-			jQuery("#dessertNameFRUI").html(model.getDish(model.selected.dessertID).name);
-			jQuery("#dessertDescFRUI").html(model.getDish(model.selected.dessertID).description);
-			jQuery(".fullrecipeUI .element .dessert img").attr('src',model.getDish(model.selected.dessertID).image);
+			jQuery("#dessertNameFRUI").html(model.getDish(model.selected.dessertID).Title);
+			jQuery("#dessertDescFRUI").html(model.getDish(model.selected.dessertID).Subcategory);
+			jQuery(".fullrecipeUI .element .dessert img").attr('src',model.getDish(model.selected.dessertID).ImageURL);
 		}
 	}
 	
@@ -113,8 +116,6 @@ var View = function (container,model){
 	this.state = function(num){
 		jQuery('html').removeClass().addClass('state'+num);
 	}
-	
-
 	/** Update method for Observer pattern **/
 	/*
 	 * Unique update function that updates all DOM elements
