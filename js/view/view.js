@@ -27,19 +27,30 @@ var View = function (container,model){
 	this.shapeList = function(){
 
 		if (model.selected.SaladID !== 0){
-			console.log(model.selected);
-			this.addToList(model.getDish(model.selected.SaladID).Title,model.getDishPrice(model.selected.SaladID));
+			context = this ;
+			model.getDishAPI(model.selected.SaladID,function(){
+			var SaladName = model.getDish(model.selected.SaladID).Title;
+			context.addToList(SaladName,1/*model.getDishPrice(model.selected.SaladID)*/);
+		});
 		}
 		if (model.selected.mainDishID !== 0){
-
-			this.addToList(model.getDish(model.selected.mainDishID).Title,model.getDishPrice(model.selected.mainDishID));
+			context2 = this ;
+			model.getDishAPI(model.selected.mainDishID,function(){
+			var mainName = model.getDish(model.selected.mainDishID).Title;
+			context2.addToList(mainName,2/*model.getDishPrice(model.selected.mainDishID)*/);
+		});
 		}
 		if (model.selected.dessertID !== 0){
-			this.addToList(model.getDish(model.selected.dessertID).Title,model.getDishPrice(model.selected.dessertID));
+			context3 = this ;
+			model.getDishAPI(model.selected.dessertID,function(){
+			var DessertName = model.getDish(model.selected.dessertID).Title;
+			context3.addToList(DessertName,3/*model.getDishPrice(model.selected.dessertID)*/);
+		});
 		}
 		if (parseInt(model.selected.SaladID + model.selected.mainDishID + model.selected.dessertID) == 0){
 			this.addPendingLineToList();
 		}
+	
 	}
 	this.setLeftTotalPerPerson = function(){
 		jQuery('#left .pricearea .perpersonpricearea p.price').html(model.getTotalPerPerson());
@@ -94,21 +105,24 @@ var View = function (container,model){
 	this.shapeFinalRecipe = function(){
 		// Salad
 		if (model.selected.SaladID !== 0){
-			jQuery("#SaladNameFRUI").html(model.getDish(model.selected.SaladID).Title);
-			jQuery("#SaladDescFRUI").html(model.getDish(model.selected.SaladID).Subcategory);
-			jQuery(".fullrecipeUI .element .Salad img").attr('src',model.getDish(model.selected.SaladID).ImageURL); 
+			//console.log(model.dishObjectArray.SaladObject.Title);
+			jQuery("#SaladNameFRUI").html(model.dishObjectArray.SaladObject.Title);
+			jQuery("#SaladDescFRUI").html(model.dishObjectArray.SaladObject.Subcategory);
+			jQuery(".fullrecipeUI .element .Salad img").attr('src',model.dishObjectArray.SaladObject.ImageURL); 
 		}
 		if (model.selected.mainDishID !== 0){
 			// Main Dish
-			jQuery("#mainNameFRUI").html(model.getDish(model.selected.mainDishID).Title);
-			jQuery("#mainDescFRUI").html(model.getDish(model.selected.mainDishID).Subcategory);
-			jQuery(".fullrecipeUI .element .main img").attr('src',model.getDish(model.selected.mainDishID).ImageURL);
+			//console.log(model.dishObjectArray.mainDishObject.Title);
+			jQuery("#mainNameFRUI").html(model.dishObjectArray.mainDishObject.Title);
+			jQuery("#mainDescFRUI").html(model.dishObjectArray.mainDishObject.Subcategory);
+			jQuery(".fullrecipeUI .element .main img").attr('src',model.dishObjectArray.mainDishObject.ImageURL);
 		}
 		if (model.selected.dessertID !== 0){
 			// Dessert
-			jQuery("#dessertNameFRUI").html(model.getDish(model.selected.dessertID).Title);
-			jQuery("#dessertDescFRUI").html(model.getDish(model.selected.dessertID).Subcategory);
-			jQuery(".fullrecipeUI .element .dessert img").attr('src',model.getDish(model.selected.dessertID).ImageURL);
+			//console.log(model.dishObjectArray.dessertObject.Title);
+			jQuery("#dessertNameFRUI").html(model.dishObjectArray.dessertObject.Title);
+			jQuery("#dessertDescFRUI").html(model.dishObjectArray.dessertObject.Subcategory);
+			jQuery(".fullrecipeUI .element .dessert img").attr('src',model.dishObjectArray.dessertObject.ImageURL);
 		}
 	}
 	

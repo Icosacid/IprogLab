@@ -167,7 +167,7 @@ var DinnerModel = function() {
 				console.log(context.selected);
 				
 				// Update totals
-				context.setTotals();// Which will notify too
+				//context.setTotals();// Which will notify too
 		});
 
 	}
@@ -214,10 +214,19 @@ var DinnerModel = function() {
 			console.log(sumPrice);
 			return sumPrice;
 	}
-
 	var dishtest;
+
+	this.dishObjectArray = {
+		SaladObject : null,
+		mainDishObject : null,
+		dessertObject : null,
+	};
 	//function that returns a dish of specific ID
 	this.getDish = function (id){
+		if (dishtest.Category == "Desserts"){this.selected.dessertID = id; this.dishObjectArray.dessertObject = dishtest;};
+		if (dishtest.Category == "Main Dish"){this.selected.mainDishID = id; this.dishObjectArray.mainDishObject = dishtest;};
+		if (dishtest.Category == "Salad"){this.selected.SaladID = id; this.dishObjectArray.SaladObject = dishtest;};
+		console.log(this.dishObjectArray);
 		return dishtest;
 	}
 

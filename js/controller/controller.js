@@ -73,6 +73,7 @@ var Controller = function (view,model){
 	jQuery('.confirmUI .print p').off().on('click',function(){
 		state = 5;
 		view.state(5);
+		model.notify();
 		console.log("fullrecipeUI");
 	});
 	
