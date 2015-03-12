@@ -21,6 +21,12 @@ var DinnerModel = function() {
 		dessertID : 0,
 	};
 
+	this.dishObjectArray = {
+		SaladObject : null,
+		mainDishObject : null,
+		dessertObject : null,
+	};
+
 	this.totalPerPerson = null;
 	this.total = null;
 	
@@ -38,15 +44,15 @@ var DinnerModel = function() {
 		var menuDishPrice = 0;
 		if (this.selected.SaladID !== 0)
 		{
-			menuDishPrice += this.getDishPrice(this.selected.SaladID);
+			menuDishPrice += this.getDishPrice("Salad",this.selected.SaladID);
 		}
 		if (this.selected.mainDishID !== 0)
 		{
-			menuDishPrice += this.getDishPrice(this.selected.mainDishID);
+			menuDishPrice += this.getDishPrice("Main Dish",this.selected.mainDishID);
 		}
 		if (this.selected.dessertID !== 0)
 		{
-			menuDishPrice += this.getDishPrice(this.selected.dessertID);
+			menuDishPrice += this.getDishPrice("Desserts", this.selected.dessertID);
 		}
 		// Update 1
 		this.totalPerPerson = menuDishPrice;
@@ -202,12 +208,18 @@ var DinnerModel = function() {
 	this.countDishes = function(){
 		return this.dishes.length;
 	}
-	this.getDishPrice = function(id){
-		context = this;
+	var theDish;
+	var sumPrice;
+	this.getDishPrice = function(type, id){
+
 		console.log('getDishPrice called with id '+id);
-			var theDish = context.getDish(id);
+			
+			if(type == "Desserts"){theDish = this.dishObjectArray.dessertObject;};
+			if(type == "Main Dish"){theDish = this.dishObjectArray.mainDishObject;};
+			if(type == "Salad"){theDish = this.dishObjectArray.SaladObject;};
+
 			console.log(theDish);
-			var sumPrice = 0;
+			sumPrice = 0 ;
 			for(key in theDish.Ingredients) {
 				sumPrice += theDish.Ingredients[key].Quantity;
 			}
@@ -215,12 +227,6 @@ var DinnerModel = function() {
 			return sumPrice;
 	}
 	var dishtest;
-
-	this.dishObjectArray = {
-		SaladObject : null,
-		mainDishObject : null,
-		dessertObject : null,
-	};
 	//function that returns a dish of specific ID
 	this.getDish = function (id){
 		if (dishtest.Category == "Desserts"){this.selected.dessertID = id; this.dishObjectArray.dessertObject = dishtest;};

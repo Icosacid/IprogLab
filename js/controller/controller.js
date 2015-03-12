@@ -48,14 +48,14 @@ var Controller = function (view,model){
 
 		//Set the right Salad, main dish and dessert
 		$("#SaladName").html(model.dishObjectArray.SaladObject.Title);
-		$("#SaladPrice").html(model.getDishPrice(model.selected.SaladID));
+		$("#SaladPrice").html(model.getDishPrice("Salad",model.selected.SaladID));
 		//$(".confirmUI .summary .Salad img").empty();
 		$(".confirmUI .summary .Salad img").attr('src',model.dishObjectArray.SaladObject.ImageURL); 
 		$("#mainName").html(model.dishObjectArray.mainDishObject.Title);
-		$("#mainPrice").html(model.getDishPrice(model.selected.mainDishID));
+		$("#mainPrice").html(model.getDishPrice("Main Dish",model.selected.mainDishID));
 		$(".confirmUI .summary .maindish img").attr('src',model.dishObjectArray.mainDishObject.ImageURL); 
 		$("#dessertName").html(model.dishObjectArray.dessertObject.Title);
-		$("#dessertPrice").html(model.getDishPrice(model.selected.dessertID));
+		$("#dessertPrice").html(model.getDishPrice("Desserts",model.selected.dessertID));
 		$(".confirmUI .summary .dessert img").attr('src',model.dishObjectArray.dessertObject.ImageURL); 
 
 
