@@ -47,17 +47,16 @@ var Controller = function (view,model){
 		console.log("confirmUI");
 
 		//Set the right Salad, main dish and dessert
-		//$("#SaladName").html(model.getDish(model.selected.SaladID).Title);
+		$("#SaladName").html(model.dishObjectArray.SaladObject.Title);
 		$("#SaladPrice").html(model.getDishPrice(model.selected.SaladID));
 		//$(".confirmUI .summary .Salad img").empty();
-		$(".confirmUI .summary .Salad img").attr('src',model.getDish(model.selected.SaladID).ImageURL); 
-
-		$("#main").html(model.getDish(model.selected.mainDishID).Title);
+		$(".confirmUI .summary .Salad img").attr('src',model.dishObjectArray.SaladObject.ImageURL); 
+		$("#mainName").html(model.dishObjectArray.mainDishObject.Title);
 		$("#mainPrice").html(model.getDishPrice(model.selected.mainDishID));
-		$(".confirmUI .summary .maindish img").attr('src',model.getDish(model.selected.mainDishID).ImageURL); 
-		$("#dessertName").html(model.getDish(model.selected.dessertID).Title);
+		$(".confirmUI .summary .maindish img").attr('src',model.dishObjectArray.mainDishObject.ImageURL); 
+		$("#dessertName").html(model.dishObjectArray.dessertObject.Title);
 		$("#dessertPrice").html(model.getDishPrice(model.selected.dessertID));
-		$(".confirmUI .summary .dessert img").attr('src',model.getDish(model.selected.dessertID).ImageURL); 
+		$(".confirmUI .summary .dessert img").attr('src',model.dishObjectArray.dessertObject.ImageURL); 
 
 
 	});
@@ -82,7 +81,7 @@ var Controller = function (view,model){
 	// Tiggered in displayDishes()
 	function dishListeners(idArray){
 		console.log("Controller.dishListeners() called");
-		
+	
 		for (key in idArray){		//return the food that correspond to the id 
 			(function(key){
 				jQuery('.selectUI .display .block.id'+idArray[key]+' *').off().on('click',function(){
@@ -97,6 +96,7 @@ var Controller = function (view,model){
 				});
 			})(key);
 		}
+
 	};
 
 	/** Filter functions **/

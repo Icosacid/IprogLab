@@ -231,7 +231,7 @@ var DinnerModel = function() {
 	}
 
 	this.getDishAPI = function(recipeID, callback) {
-		var apiKey = "dvxpWrF1lW3ITKs85zY3e6q7UnVE7zUD";
+		var apiKey = "dvx56Dym7twQKn2497tl070E54Y13cQM";
 
 		// var recipeID = 196149;
 		var url = "http://api.bigoven.com/recipe/" + recipeID + "?api_key="+apiKey;
@@ -249,10 +249,10 @@ var DinnerModel = function() {
        }
 
 	this.getRecipeJson = function(type, callback) {
-		var apiKey = "dvxpWrF1lW3ITKs85zY3e6q7UnVE7zUD";
+		var apiKey = "dvx56Dym7twQKn2497tl070E54Y13cQM";
 		//var recipeID = 196149;
 		var url = "http://api.bigoven.com/recipe?include_primarycat=" +type+ "&pg=1&rpp=20" +"&api_key="+apiKey;
-		//http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=dvxpWrF1lW3ITKs85zY3e6q7UnVE7zUD
+		//http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=dvx56Dym7twQKn2497tl070E54Y13cQM
 		var self = this;
 		
 		$.ajax({

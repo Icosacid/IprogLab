@@ -27,25 +27,28 @@ var View = function (container,model){
 	this.shapeList = function(){
 
 		if (model.selected.SaladID !== 0){
-			context = this ;
-			model.getDishAPI(model.selected.SaladID,function(){
-			var SaladName = model.getDish(model.selected.SaladID).Title;
-			context.addToList(SaladName,1/*model.getDishPrice(model.selected.SaladID)*/);
-		});
+			//context = this ;
+			this.addToList(model.dishObjectArray.SaladObject.Title, 1);
+		// 	model.getDishAPI(model.selected.SaladID,function(){
+		// 	var SaladName = model.getDish(model.selected.SaladID).Title;
+		// 	context.addToList(SaladName,1/*model.getDishPrice(model.selected.SaladID)*/);
+		// });
 		}
 		if (model.selected.mainDishID !== 0){
-			context2 = this ;
-			model.getDishAPI(model.selected.mainDishID,function(){
-			var mainName = model.getDish(model.selected.mainDishID).Title;
-			context2.addToList(mainName,2/*model.getDishPrice(model.selected.mainDishID)*/);
-		});
+			this.addToList(model.dishObjectArray.mainDishObject.Title, 1);
+		// 	context2 = this ;
+		// 	model.getDishAPI(model.selected.mainDishID,function(){
+		// 	var mainName = model.getDish(model.selected.mainDishID).Title;
+		// 	context2.addToList(mainName,2/*model.getDishPrice(model.selected.mainDishID)*/);
+		// });
 		}
 		if (model.selected.dessertID !== 0){
-			context3 = this ;
-			model.getDishAPI(model.selected.dessertID,function(){
-			var DessertName = model.getDish(model.selected.dessertID).Title;
-			context3.addToList(DessertName,3/*model.getDishPrice(model.selected.dessertID)*/);
-		});
+			this.addToList(model.dishObjectArray.dessertObject.Title, 1);
+		// 	context3 = this ;
+		// 	model.getDishAPI(model.selected.dessertID,function(){
+		// 	var DessertName = model.getDish(model.selected.dessertID).Title;
+		// 	context3.addToList(DessertName,3/*model.getDishPrice(model.selected.dessertID)*/);
+		// });
 		}
 		if (parseInt(model.selected.SaladID + model.selected.mainDishID + model.selected.dessertID) == 0){
 			this.addPendingLineToList();
