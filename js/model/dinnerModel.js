@@ -20,7 +20,7 @@ var DinnerModel = function() {
 		mainDishID : 0,
 		dessertID : 0,
 	};
-
+	
 	this.dishObjectArray = {
 		SaladObject : null,
 		mainDishObject : null,

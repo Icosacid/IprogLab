@@ -147,7 +147,8 @@ var View = function (container,model){
 			var dishesAPI = object;
 			console.log(dishesAPI);
 		}
-		
+		document.getElementById("loading").style.display="none";
+   console.log(document.getElementById("loading").style.display);
 		/** In several UI **/
 		this.setGuests();
 		

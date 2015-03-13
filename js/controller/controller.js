@@ -60,6 +60,8 @@ var Controller = function (view,model){
 		$("#dessertPrice").html(model.getDishPrice("Desserts",model.selected.dessertID));
 		$(".confirmUI .summary .dessert img").attr('src',model.dishObjectArray.dessertObject.ImageURL); 
 
+		document.getElementById("loading").style.display="none";
+   console.log(document.getElementById("loading").style.display);
 
 	});
 	
@@ -68,6 +70,8 @@ var Controller = function (view,model){
 		state = 2;
 		view.state(2);
 		console.log("confirmUI and fullrecipeUI to selectUI");
+		document.getElementById("loading").style.display="none";
+   console.log(document.getElementById("loading").style.display);
 	});
 	
 	// Go to fullrecipeUI
@@ -76,6 +80,8 @@ var Controller = function (view,model){
 		view.state(5);
 		model.notify();
 		console.log("fullrecipeUI");
+		document.getElementById("loading").style.display="none";
+   console.log(document.getElementById("loading").style.display);
 	});
 	
 	/** Listeners for dishes **/
