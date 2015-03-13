@@ -249,8 +249,17 @@ var DinnerModel = function() {
          success: function (data) {
             console.log(data);
            	dishtest = data;
+           	document.getElementById("loading").style.display="inline";
+           	console.log(document.getElementById("loading").style.display);
             callback();
-            }
+            },
+			error: function(jqXHR,error, errorThrown) {  
+               if(jqXHR.status&&jqXHR.status==400){
+                    alert(jqXHR.responseText); 
+               }else{
+                   alert("Something went wrong");
+               }
+           }
          });
        }
 
@@ -272,11 +281,19 @@ var DinnerModel = function() {
 				for (var i = 0; i < data.Results.length; i++) {
 				 	self.dishes.push(data.Results[i]);
 				};
-
+				document.getElementById("loading").style.display="inline";
+				console.log(document.getElementById("loading").style.display);
 				self.notify(self.dishes);
 				callback();
 
-			}
+			},
+			error: function(jqXHR,error, errorThrown) {  
+               if(jqXHR.status&&jqXHR.status==400){
+                    alert(jqXHR.responseText); 
+               }else{
+                   alert("Something went wrong");
+               }
+           }
 		});
 	}
 	this.getSearchRecipeJson = function(type, Keyword, callback) {
@@ -290,18 +307,26 @@ var DinnerModel = function() {
 			type: "GET",
 			dataType: 'json',
 			cache: false,
-			url : "http://api.bigoven.com/recipes?include_primarycat=" +type+ "&pg=1&rpp=20&any_kw="+Keyword+"&api_key="+apiKey,
+			url : "http://api.bigoven.com/recipes?include_primarycat=" +type+ "&pg=1&rpp=50&any_kw="+Keyword+"&api_key="+apiKey,
 			success: function (data) {
 				console.log(data);
 				self.dishes = [];
 				for (var i = 0; i < data.Results.length; i++) {
 				 	self.dishes.push(data.Results[i]);
 				};
-
+				document.getElementById("loading").style.display="inline";
+				console.log(document.getElementById("loading").style.display);
 				self.notify(self.dishes);
 				callback();
 
-			}
+			},
+			error: function(jqXHR,error, errorThrown) {  
+               if(jqXHR.status&&jqXHR.status==400){
+                    alert(jqXHR.responseText); 
+               }else{
+                   alert("Something went wrong");
+               }
+           }
 		});
 	}
 	

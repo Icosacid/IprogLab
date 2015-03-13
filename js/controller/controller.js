@@ -13,6 +13,8 @@ var Controller = function (view,model){
 
 	/** Initial AJAX load **/
 	model.getRecipeJson(jQuery('select').val(), function(){
+   document.getElementById("loading").style.display="none";
+   console.log(document.getElementById("loading").style.display);
    displayDishes();
 	});
 	
@@ -92,6 +94,8 @@ var Controller = function (view,model){
 					model.getDishAPI(idArray[key], function(){
 						var dish = model.getDish(idArray[key]); 
 						view.loadDishUI(dish.RecipeID,dish.Title,dish.ImageURL,dish.Subcategory,dish.Ingredients,model.guests);	
+						document.getElementById("loading").style.display="none";
+						console.log(document.getElementById("loading").style.display);
 					});
 				});
 			})(key);
@@ -137,6 +141,8 @@ var Controller = function (view,model){
 	// Selection of menu type
 	jQuery('select').change(function(){
 		model.getRecipeJson(jQuery('select').val(), function(){
+		document.getElementById("loading").style.display="none";
+		console.log(document.getElementById("loading").style.display);
 		displayDishes();
 	});
 		// displayDishes($(this).val(),false);
@@ -153,6 +159,8 @@ var Controller = function (view,model){
 			isOK = true;
 			// Load the content live! (= not use the button, actually...)
 	model.getSearchRecipeJson(jQuery('select').val(),valval, function(){
+		document.getElementById("loading").style.display="none";
+		console.log(document.getElementById("loading").style.display);
 		displayDishes();
 	});
 		}

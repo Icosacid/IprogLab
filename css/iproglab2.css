@@ -401,7 +401,13 @@ body{
 	position:relative;
 	display:inline-block;
 	float:left;
-
+}
+#loading{
+	width:15%;
+	left:40%;
+	top: 50%;
+	margin:15px;
+	height:250px;
 }
 .selectUI .display .block:hover{
 	background:rgba(0,0,0,0.1);	
