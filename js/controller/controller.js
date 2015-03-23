@@ -40,6 +40,8 @@ var Controller = function (view,model){
 		view.state(2);
 		console.log(view.displayed);
 		model.addDishToMenu(view.displayed);
+		model.setTotals();
+
 	});
 	
 	// Go to confirmUI
