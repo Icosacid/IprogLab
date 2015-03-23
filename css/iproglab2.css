@@ -404,10 +404,10 @@ body{
 }
 #loading{
 	width:15%;
-	left:40%;
-	top: 50%;
+	left:80%;
+	top: 15%;
 	margin:15px;
-	height:250px;
+	height:20px;
 }
 .selectUI .display .block:hover{
 	background:rgba(0,0,0,0.1);	

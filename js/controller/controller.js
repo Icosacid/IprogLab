@@ -47,7 +47,8 @@ var Controller = function (view,model){
 		state = 4;
 		view.state(4);
 		console.log("confirmUI");
-
+		document.getElementById("loading").style.display="none";
+   		console.log(document.getElementById("loading").style.display);
 		//Set the right Salad, main dish and dessert
 		$("#SaladName").html(model.dishObjectArray.SaladObject.Title);
 		$("#SaladPrice").html(model.getDishPrice("Salad",model.selected.SaladID));
@@ -59,9 +60,6 @@ var Controller = function (view,model){
 		$("#dessertName").html(model.dishObjectArray.dessertObject.Title);
 		$("#dessertPrice").html(model.getDishPrice("Desserts",model.selected.dessertID));
 		$(".confirmUI .summary .dessert img").attr('src',model.dishObjectArray.dessertObject.ImageURL); 
-
-		document.getElementById("loading").style.display="none";
-   console.log(document.getElementById("loading").style.display);
 
 	});
 	
@@ -78,10 +76,11 @@ var Controller = function (view,model){
 	jQuery('.confirmUI .print p').off().on('click',function(){
 		state = 5;
 		view.state(5);
+		document.getElementById("loading").style.display="none";
+   		console.log(document.getElementById("loading").style.display);
 		model.notify();
 		console.log("fullrecipeUI");
-		document.getElementById("loading").style.display="none";
-   console.log(document.getElementById("loading").style.display);
+
 	});
 	
 	/** Listeners for dishes **/

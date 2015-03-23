@@ -63,6 +63,7 @@ var View = function (container,model){
 	}
 	this.setLeftTotal = function(){
 		jQuery('#left .pricearea .totalpricearea p.totalprice').html(model.getTotal());
+		console.log(model.getTotal());
 	}
 
 	/** SelectDish UI **/
@@ -143,12 +144,8 @@ var View = function (container,model){
 	 */
 	this.update = function(object){
 		
-		if (typeof object !== "undefined" && object.length == 20){
-			var dishesAPI = object;
-			console.log(dishesAPI);
-		}
 		document.getElementById("loading").style.display="none";
-   console.log(document.getElementById("loading").style.display);
+   		console.log(document.getElementById("loading").style.display);
 		/** In several UI **/
 		this.setGuests();
 		

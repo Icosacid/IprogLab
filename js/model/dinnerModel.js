@@ -14,7 +14,7 @@ var DinnerModel = function() {
  	};
 	//TODO Lab 2 implement the data structure that will hold number of guest
 	// and selected dinner options for dinner menu
-	this.guests = 1;
+	this.guests = 0;
 	this.selected = {
 		SaladID : 0,
 		mainDishID : 0,
@@ -27,8 +27,8 @@ var DinnerModel = function() {
 		dessertObject : null,
 	};
 
-	this.totalPerPerson = null;
-	this.total = null;
+	this.totalPerPerson = 0;
+	this.total = 0;
 	
 	// Sets the number of guests
 	this.setNumberOfGuests = function(num){
@@ -70,6 +70,7 @@ var DinnerModel = function() {
 		return this.totalPerPerson;
 	}
 	// Returns total
+
 	this.getTotal = function(){
 		return this.total;
 	}
@@ -241,6 +242,8 @@ var DinnerModel = function() {
 
 		// var recipeID = 196149;
 		var url = "http://api.bigoven.com/recipe/" + recipeID + "?api_key="+apiKey;
+		document.getElementById("loading").style.display="inline";
+           	console.log(document.getElementById("loading").style.display);
 		 $.ajax({
          type: "GET",
          dataType: 'json',
@@ -249,8 +252,7 @@ var DinnerModel = function() {
          success: function (data) {
             console.log(data);
            	dishtest = data;
-           	document.getElementById("loading").style.display="inline";
-           	console.log(document.getElementById("loading").style.display);
+           	
             callback();
             },
 			error: function(jqXHR,error, errorThrown) {  
@@ -269,20 +271,19 @@ var DinnerModel = function() {
 		var url = "http://api.bigoven.com/recipe?include_primarycat=" +type+ "&pg=1&rpp=20" +"&api_key="+apiKey;
 		//http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=dvx56Dym7twQKn2497tl070E54Y13cQM
 		var self = this;
-		
+		document.getElementById("loading").style.display="inline";
+		console.log(document.getElementById("loading").style.display);		
 		$.ajax({
 			type: "GET",
 			dataType: 'json',
 			cache: false,
 			url: "http://api.bigoven.com/recipes?include_primarycat="+type+"&pg=1&rpp=20&api_key=" + apiKey,
 			success: function (data) {
-				
+
 				self.dishes = [];
 				for (var i = 0; i < data.Results.length; i++) {
 				 	self.dishes.push(data.Results[i]);
 				};
-				document.getElementById("loading").style.display="inline";
-				console.log(document.getElementById("loading").style.display);
 				self.notify(self.dishes);
 				callback();
 
@@ -302,20 +303,19 @@ var DinnerModel = function() {
 		//var url = "http://api.bigoven.com/recipe?include_primarycat=" +type+ "&pg=1&rpp=20" +"&api_key="+apiKey;
 		//http://api.bigoven.com/recipes?include_primarycat=dessert&pg=1&rpp=20&api_key=dvxpWrF1lW3ITKs85zY3e6q7UnVE7zUD
 		var self = this;
-		
+		document.getElementById("loading").style.display="inline";
+		console.log(document.getElementById("loading").style.display);		
 		$.ajax({
 			type: "GET",
 			dataType: 'json',
 			cache: false,
-			url : "http://api.bigoven.com/recipes?include_primarycat=" +type+ "&pg=1&rpp=50&any_kw="+Keyword+"&api_key="+apiKey,
+			url : "http://api.bigoven.com/recipes?include_primarycat=" +type+ "&pg=1&rpp=20&any_kw="+Keyword+"&api_key="+apiKey,
 			success: function (data) {
 				console.log(data);
 				self.dishes = [];
 				for (var i = 0; i < data.Results.length; i++) {
 				 	self.dishes.push(data.Results[i]);
 				};
-				document.getElementById("loading").style.display="inline";
-				console.log(document.getElementById("loading").style.display);
 				self.notify(self.dishes);
 				callback();
 
